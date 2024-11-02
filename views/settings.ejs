@@ -36,8 +36,9 @@
 </head>
 <body class="bg-gray-700 text-white">
     <header class="w-full flex justify-between px-4 py-3 bg-gray-700">
-        <a href="/dashboard" class="flex gap-2 items-center">
+        <a href="/dashboard" class="flex">
             <img src="/ss.png" class="h-9 w-auto" alt="FHY WaBotUI">
+			<span class="text-xs font-bold text-gray-300">v1.5</span>
         </a>
         <div class="gap-2 items-center flex">
 			<button class="relative bg-gray-900 hover:bg-gray-800 text-white p-2 rounded group" id="restartServerButton">
@@ -138,10 +139,6 @@
 						<div class="flex flex-col gap-1">
 							<label class="text-xs md:text-sm">Gemini Prompt</label>
 							<input name="GEMINI_PROMPT" class="p-2 rounded bg-gray-800 w-full focus:outline-none border border-gray-700" value="<%= config.settings.GEMINI_PROMPT %>" onkeydown="return event.key !== ' '" />
-						</div>
-						<div class="flex flex-col gap-1">
-							<label class="text-xs md:text-sm">New Feature</label>
-							<input class="p-2 rounded bg-gray-700 w-full focus:outline-none border border-gray-700" value="Comming soon." readonly />
 						</div>
 					</div>
 					<div class="flex justify-start mt-4">
@@ -503,11 +500,6 @@
 							<code class="bg-gray-700">.check-price</code>  
 							laptop</span>
 						</div>
-					</div>
-					
-					
-					<div class="text-center mt-4 text-gray-300 text-xs">
-						New Features (Comming soon..)
 					</div>
 					
 					<div class="flex justify-start mt-4">
