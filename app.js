@@ -423,6 +423,7 @@ app.post('/settings', (req, res) => {
         CMD_DILAN: req.body.CMD_DILAN,
         CMD_KECKER: req.body.CMD_KECKER,
         CMD_KATA: req.body.CMD_KATA,
+        CMD_GOOGLE_PRODUCT: req.body.CMD_GOOGLE_PRODUCT,
     };
 
     fs.readFile(configPath, 'utf8', (err, data) => {

@@ -19,9 +19,34 @@ const { WikipediaAI, WikipediaSearch, WikipediaImage } = require('./utils/Wikipe
 const { Surah, SurahDetails } = require('./utils/Quran');
 const { AesEncryption, AesDecryption, CamelliaEncryption, CamelliaDecryption, ShaEncryption, Md5Encryption, RipemdEncryption, BcryptEncryption } = require('./utils/Encrypts.js');
 const { kataKataRandom, heckerRandom, dilanRandom, bucinRandom, quoteRandom } = require('./utils/Entertain.js');
+const { ProductPrices } = require('./utils/Google');
 
 async function AdvancedResponse(messageContent, sender, sock, message) {
 	if ((config.settings.SELF && message.key.fromMe) || !config.settings.SELF) {
+		
+		if (messageContent.startsWith(`${config.cmd.CMD_GOOGLE_PRODUCT} `)) {
+			const query = messageContent.replace(`${config.cmd.CMD_GOOGLE_PRODUCT} `, '').trim();
+			await sock.sendMessage(sender, { react: { text: "⌛", key: message.key } });
+			try {
+				const results = await ProductPrices(query);
+				if (results.length === 0) {
+					await sock.sendMessage(sender, { text: 'No results found for: ' + query, quoted: message });
+					await sock.sendMessage(sender, { react: { text: "❌", key: message.key } });
+					return;
+				}
+				const header = `*Price Compare: ${query}*\n\n`;
+				const responseText = results.map(result => {
+					return `Site: *${result.site}*\n- ${result.title}\n- ${result.price}\n\n`;
+				}).join('');
+				await sock.sendMessage(sender, { text: header + responseText, quoted: message });
+				await sock.sendMessage(sender, { react: { text: "✅", key: message.key } });
+			} catch (error) {
+				console.error('Error fetching data:', error);
+				await sock.sendMessage(sender, { text: 'Error fetching data: ' + error.message, quoted: message });
+				await sock.sendMessage(sender, { react: { text: "❌", key: message.key } });
+			}
+		}
+
 		
 		if (messageContent === `${config.cmd.CMD_QUOTE}`) {
 			await sock.sendMessage(sender, { react: { text: "⌛", key: message.key } });

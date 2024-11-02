@@ -57,10 +57,11 @@ Project provides an intuitive and responsive interface, allowing users to manage
 ├• Count Words
 ├• QRCode Generator
 ├• Translate Text
+├• Anti Badwords
 ├• Anti Links
+├• Check & Compare Product Price
 ├• Custom Auto Response
-├• Custom Manual Messages
-└• Anti Badwords
+└• Custom Manual Messages
 ```
 
 ### Installation

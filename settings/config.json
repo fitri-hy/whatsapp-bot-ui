@@ -43,7 +43,8 @@
     "CMD_BUCIN": ".bucin",
     "CMD_DILAN": ".dilan",
     "CMD_KECKER": ".hecker",
-    "CMD_KATA": ".kata"
+    "CMD_KATA": ".kata",
+    "CMD_GOOGLE_PRODUCT": ".check-price"
   },
   "settings": {
     "QR_URL": true,
