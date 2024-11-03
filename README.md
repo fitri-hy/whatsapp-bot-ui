@@ -74,7 +74,7 @@ npm install
 
 ### Running the Server
 
-- Windows: Double-click `start.bat`
+- Windows: Double-click `start-win.bat`
 - Linux/Termux: Run `./start.sh` in terminal
 - Frontend Access: `http://localhost:3000/`
 
