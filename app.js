@@ -379,6 +379,9 @@ app.post('/update-link', (req, res) => {
 
 app.post('/settings', (req, res) => {
     const newCommands = {
+        CMD_HTTP_LOCKUP: req.body.CMD_HTTP_LOCKUP,
+        CMD_SSL_LOCKUP: req.body.CMD_SSL_LOCKUP,
+        CMD_DSN_LOCKUP: req.body.CMD_DSN_LOCKUP,
         CMD_GEMINI: req.body.CMD_GEMINI,
         CMD_GEMINI_IMG: req.body.CMD_GEMINI_IMG,
         CMD_STICKER: req.body.CMD_STICKER,

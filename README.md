@@ -57,7 +57,9 @@ WhatsApp Bot UI offers a user-friendly and responsive interface for managing a W
 ├• File Search - Searches various file formats (e.g., PDF, DOC/X, XLS/X, etc.).
 ├• Content Moderation - Anti-badwords and anti-link features.
 ├• Product Price Comparison - Check and compare prices.
-└• Custom Responses - Auto/manual response customization.
+├• Custom Responses - Auto/manual response customization.
+├• Tools Lockup (DNS, SSL, HTTP)
+└• New Features Comming soon ...
 ```
 
 ### Installation
@@ -88,6 +90,7 @@ npm install
 > - [ADD] DLock Chat in Group
 > - [ADD] Unlock Chat in Group
 > - [ADD] Self Mode Group Command
+> - [ADD] Tools Lockup (DNS, SSL, HTTP)
 
 > **Version 1.5**
 > - [ADD] File Search

@@ -20,9 +20,59 @@ const { Surah, SurahDetails } = require('./utils/Quran');
 const { AesEncryption, AesDecryption, CamelliaEncryption, CamelliaDecryption, ShaEncryption, Md5Encryption, RipemdEncryption, BcryptEncryption } = require('./utils/Encrypts.js');
 const { kataKataRandom, heckerRandom, dilanRandom, bucinRandom, quoteRandom } = require('./utils/Entertain.js');
 const { ProductPrices, FileSearch } = require('./utils/Google');
+const { dnsLookup, sslLookup, httpHeadersLookup } = require('./utils/Tools');
 
 async function AdvancedResponse(messageContent, sender, sock, message) {
 	if ((config.settings.SELF && message.key.fromMe) || !config.settings.SELF) {
+		
+		if (messageContent.startsWith(`${config.cmd.CMD_HTTP_LOCKUP} `)) {
+			const domain = messageContent.replace(`${config.cmd.CMD_HTTP_LOCKUP} `, '').trim();
+			await sock.sendMessage(sender, { react: { text: "⌛", key: message.key } });
+			try {
+				const headersResult = await httpHeadersLookup(domain);
+				await sock.sendMessage(sender, { text: headersResult }, { quoted: message });
+				await sock.sendMessage(sender, { react: { text: "✅", key: message.key } });
+			} catch (error) {
+				console.log(`Failed to lookup HTTP headers for ${domain}:`, error);
+				await sock.sendMessage(sender, { react: { text: "❌", key: message.key } });
+			}
+		}
+		if (messageContent.startsWith(`${config.cmd.CMD_SSL_LOCKUP} `)) {
+			const domain = messageContent.replace(`${config.cmd.CMD_SSL_LOCKUP} `, '').trim();
+			await sock.sendMessage(sender, { react: { text: "⌛", key: message.key } });
+			try {
+				const sslResult = await sslLookup(domain);
+				await sock.sendMessage(sender, { text: sslResult }, { quoted: message });
+				await sock.sendMessage(sender, { react: { text: "✅", key: message.key } });
+			} catch (error) {
+				console.log(`Failed to lookup SSL for ${domain}:`, error);
+				await sock.sendMessage(sender, { react: { text: "❌", key: message.key } });
+			}
+		}
+
+		if (messageContent.startsWith(`${config.cmd.CMD_DSN_LOCKUP} `)) {
+			const domain = messageContent.replace(`${config.cmd.CMD_DSN_LOCKUP} `, '').trim();
+			await sock.sendMessage(sender, { react: { text: "⌛", key: message.key } });
+			try {
+				const getData = await dnsLookup(domain);
+				const formattedResult = `*Result DNS Lookup*\n\n` +
+					`- Domain\n> ${domain}\n` +
+					`- A Records\n> ${getData.aRecords ? getData.aRecords.join(', ') : 'N/A'}\n` +
+					`- AAAA Records\n> ${getData.aaaaRecords ? getData.aaaaRecords.join(', ') : 'N/A'}\n` +
+					`- NS Records\n> ${getData.nsRecords ? getData.nsRecords.join(', ') : 'N/A'}\n` +
+					`- SOA Record\n> ${getData.soaRecord ? JSON.stringify(getData.soaRecord) : 'N/A'}\n` +
+					`- MX Records\n> ${getData.mxRecords ? getData.mxRecords.map(mx => JSON.stringify(mx)).join(', ') : 'N/A'}\n` +
+					`- CAA Records\n> ${getData.caaRecords ? getData.caaRecords.map(caa => JSON.stringify(caa)).join(', ') : 'N/A'}\n` +
+					`- TXT Records\n> ${getData.txtRecords ? getData.txtRecords.map(txt => JSON.stringify(txt)).join(', ') : 'N/A'}`;
+
+				await sock.sendMessage(sender, { text: formattedResult }, { quoted: message });
+				await sock.sendMessage(sender, { react: { text: "✅", key: message.key } });
+			} catch (error) {
+				console.log(`Failed to lookup DNS for ${domain}:`, error);
+				await sock.sendMessage(sender, { react: { text: "❌", key: message.key } });
+			}
+		}
+
 		
 		const validFileTypes = [config.cmd.CMD_PDF, config.cmd.CMD_DOC, config.cmd.CMD_DOCX, config.cmd.CMD_XLS, config.cmd.CMD_XLSX, config.cmd.CMD_PPT, config.cmd.CMD_PPTX, config.cmd.CMD_TXT, config.cmd.CMD_HTML, config.cmd.CMD_HTM, config.cmd.CMD_CSV, config.cmd.CMD_RTF, config.cmd.CMD_ODT, config.cmd.CMD_ODS, config.cmd.CMD_ODP, config.cmd.CMD_EPUB, config.cmd.CMD_ZIP, config.cmd.CMD_GZ];
 		if (validFileTypes.some(type => messageContent.startsWith(`${type}`))) {

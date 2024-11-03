@@ -707,6 +707,27 @@
 							<code class="bg-gray-700">.check-price</code>  
 							laptop</span>
 						</div>
+						<div class="flex flex-col gap-1">
+							<label class="text-xs md:text-sm">SSL Lockup</label>
+							<input name="CMD_SSL_LOCKUP" class="p-2 rounded bg-gray-800 w-full focus:outline-none border border-gray-700" value="<%= config.cmd.CMD_SSL_LOCKUP %>" onkeydown="return event.key !== ' '" />
+							<span class="text-xs text-gray-300">e.g: 
+							<code class="bg-gray-700">.ssl</code>  
+							domain</span>
+						</div>
+						<div class="flex flex-col gap-1">
+							<label class="text-xs md:text-sm">DNS Lockup</label>
+							<input name="CMD_DSN_LOCKUP" class="p-2 rounded bg-gray-800 w-full focus:outline-none border border-gray-700" value="<%= config.cmd.CMD_DSN_LOCKUP %>" onkeydown="return event.key !== ' '" />
+							<span class="text-xs text-gray-300">e.g: 
+							<code class="bg-gray-700">.dns</code>  
+							domain</span>
+						</div>
+						<div class="flex flex-col gap-1">
+							<label class="text-xs md:text-sm">HTTP Lockup</label>
+							<input name="CMD_HTTP_LOCKUP" class="p-2 rounded bg-gray-800 w-full focus:outline-none border border-gray-700" value="<%= config.cmd.CMD_HTTP_LOCKUP %>" onkeydown="return event.key !== ' '" />
+							<span class="text-xs text-gray-300">e.g: 
+							<code class="bg-gray-700">.http</code>  
+							domain</span>
+						</div>
 					</div>
 					
 					<div class="flex justify-start mt-4">
