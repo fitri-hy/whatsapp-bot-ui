@@ -687,6 +687,143 @@ async function AdvancedResponse(messageContent, sender, sock, message) {
 			}
 		}
 	}
+	
+	if ((config.settings.SELF_GROUP && message.key.fromMe) || !config.settings.SELF_GROUP) {
+		
+		if (messageContent.startsWith(`${config.cmdGroup.CMD_ADD}`)) {
+            const phoneNumber = messageContent.split(' ')[1];
+            await sock.sendMessage(sender, { react: { text: "⌛", key: message.key } });
+            if (phoneNumber) {
+                const userJid = `${phoneNumber}@s.whatsapp.net`;
+                try {
+                    await sock.groupParticipantsUpdate(sender, [userJid], "add");
+                    await sock.sendMessage(sender, { text: "User added!" }, { quoted: message });
+                    await sock.sendMessage(sender, { react: { text: "✅", key: message.key } });
+                } catch (error) {
+                    console.error('Error adding user:', error);
+                    await sock.sendMessage(sender, { react: { text: "❌", key: message.key } });
+                }
+            } else {
+                await sock.sendMessage(sender, { text: "Please provide a phone number to add." }, { quoted: message });
+                await sock.sendMessage(sender, { react: { text: "❌", key: message.key } });
+            }
+        }
+		
+		if (messageContent.startsWith(`${config.cmdGroup.CMD_KICK}`)) {
+            const mentionedJid = message.message.extendedTextMessage.contextInfo.mentionedJid;
+            await sock.sendMessage(sender, { react: { text: "⌛", key: message.key } });
+            if (mentionedJid && mentionedJid.length > 0) {
+                try {
+                    await sock.groupParticipantsUpdate(sender, mentionedJid, "remove");
+                    await sock.sendMessage(sender, { text: "User(s) Kicked!" }, { quoted: message });
+                    await sock.sendMessage(sender, { react: { text: "✅", key: message.key } });
+                } catch (error) {
+                    console.error('Error demoting user:', error);
+                    await sock.sendMessage(sender, { react: { text: "❌", key: message.key } });
+                }
+            } else {
+                await sock.sendMessage(sender, { text: "Please mention a user to Kick." }, { quoted: message });
+                await sock.sendMessage(sender, { react: { text: "❌", key: message.key } });
+            }
+        }
+		
+		if (messageContent.startsWith(`${config.cmdGroup.CMD_TITLE}`)) {
+            const newName = messageContent.split(' ').slice(1).join(' ');
+            await sock.sendMessage(sender, { react: { text: "⌛", key: message.key } });
+            if (newName) {
+                try {
+                    await sock.groupUpdateSubject(sender, newName);
+                    await sock.sendMessage(sender, { text: "Group name changed!" }, { quoted: message });
+                    await sock.sendMessage(sender, { react: { text: "✅", key: message.key } });
+                } catch (error) {
+                    console.error('Error changing group name:', error);
+                    await sock.sendMessage(sender, { react: { text: "❌", key: message.key } });
+                }
+            } else {
+                await sock.sendMessage(sender, { text: "Please enter a new group name." }, { quoted: message });
+                await sock.sendMessage(sender, { react: { text: "❌", key: message.key } });
+            }
+        }
+
+        if (messageContent.startsWith(`${config.cmdGroup.CMD_DESC}`)) {
+            const newDesc = messageContent.split(' ').slice(1).join(' ');
+            await sock.sendMessage(sender, { react: { text: "⌛", key: message.key } });
+            if (newDesc) {
+                try {
+                    await sock.groupUpdateDescription(sender, newDesc);
+                    await sock.sendMessage(sender, { text: "Group description changed!" }, { quoted: message });
+                    await sock.sendMessage(sender, { react: { text: "✅", key: message.key } });
+                } catch (error) {
+                    console.error('Error changing group description:', error);
+                    await sock.sendMessage(sender, { react: { text: "❌", key: message.key } });
+                }
+            } else {
+                await sock.sendMessage(sender, { text: "Please enter a new group description." }, { quoted: message });
+                await sock.sendMessage(sender, { react: { text: "❌", key: message.key } });
+            }
+        }
+		
+		if (messageContent.startsWith(`${config.cmdGroup.CMD_PROMOTE}`)) {
+            const mentionedJid = message.message.extendedTextMessage.contextInfo.mentionedJid;
+            await sock.sendMessage(sender, { react: { text: "⌛", key: message.key } });
+            if (mentionedJid && mentionedJid.length > 0) {
+                try {
+                    await sock.groupParticipantsUpdate(sender, mentionedJid, "promote");
+                    await sock.sendMessage(sender, { text: "User(s) Promoted!" }, { quoted: message });
+                    await sock.sendMessage(sender, { react: { text: "✅", key: message.key } });
+                } catch (error) {
+                    console.error('Error promoting user:', error);
+                    await sock.sendMessage(sender, { react: { text: "❌", key: message.key } });
+                }
+            } else {
+                await sock.sendMessage(sender, { text: "Please mention a user to Promote." }, { quoted: message });
+                await sock.sendMessage(sender, { react: { text: "❌", key: message.key } });
+            }
+        }
+		
+		if (messageContent.startsWith(`${config.cmdGroup.CMD_DEMOTE}`)) {
+            const mentionedJid = message.message.extendedTextMessage.contextInfo.mentionedJid;
+            await sock.sendMessage(sender, { react: { text: "⌛", key: message.key } });
+            if (mentionedJid && mentionedJid.length > 0) {
+                try {
+                    await sock.groupParticipantsUpdate(sender, mentionedJid, "demote");
+                    await sock.sendMessage(sender, { text: "User(s) Demoted!" }, { quoted: message });
+                    await sock.sendMessage(sender, { react: { text: "✅", key: message.key } });
+                } catch (error) {
+                    console.error('Error demoting user:', error);
+                    await sock.sendMessage(sender, { react: { text: "❌", key: message.key } });
+                }
+            } else {
+                await sock.sendMessage(sender, { text: "Please mention a user to Demote." }, { quoted: message });
+                await sock.sendMessage(sender, { react: { text: "❌", key: message.key } });
+            }
+        }
+		
+		if (messageContent === `${config.cmdGroup.CMD_LOCK_CHAT}`) {
+            await sock.sendMessage(sender, { react: { text: "⌛", key: message.key } });
+            try {
+                await sock.groupSettingUpdate(sender, "announcement");
+                await sock.sendMessage(sender, { text: "Chat locked! Only admins can send messages." }, { quoted: message });
+                await sock.sendMessage(sender, { react: { text: "✅", key: message.key } });
+            } catch (error) {
+                console.error('Error closing chat:', error);
+                await sock.sendMessage(sender, { react: { text: "❌", key: message.key } });
+            }
+        }
+
+        if (messageContent === `${config.cmdGroup.CMD_UNLOCK_CHAT}`) {
+            await sock.sendMessage(sender, { react: { text: "⌛", key: message.key } });
+            try {
+                await sock.groupSettingUpdate(sender, "not_announcement");
+                await sock.sendMessage(sender, { text: "Chat unlocked! Everyone can send messages." }, { quoted: message });
+                await sock.sendMessage(sender, { react: { text: "✅", key: message.key } });
+            } catch (error) {
+                console.error('Error opening chat:', error);
+                await sock.sendMessage(sender, { react: { text: "❌", key: message.key } });
+            }
+        }
+		
+	}
 
 	const deleteFile = (filePath) => {
 		fs.unlink(filePath, (err) => {

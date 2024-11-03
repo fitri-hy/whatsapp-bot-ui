@@ -38,7 +38,7 @@
     <header class="w-full flex justify-between px-4 py-3 bg-gray-700">
         <a href="/dashboard" class="flex">
             <img src="/ss.png" class="h-9 w-auto" alt="FHY WaBotUI">
-			<span class="text-xs font-bold text-gray-300">v1.5</span>
+			<span class="text-xs font-bold text-gray-300">v1.6</span>
         </a>
         <div class="gap-2 items-center flex">
 			<button class="relative bg-gray-900 hover:bg-gray-800 text-white p-2 rounded group" id="restartServerButton">
@@ -95,10 +95,17 @@
 							</select>
 						</div>
 						<div class="flex flex-col gap-1">
-							<label class="text-xs md:text-sm">Self Mode</label>
+							<label class="text-xs md:text-sm">Self Command</label>
 							<select name="SELF" class="p-2 rounded bg-gray-800 w-full focus:outline-none border border-gray-700">
 								<option value="true" <%= config.settings.SELF === true ? 'selected' : '' %>>Enable</option>
 								<option value="false" <%= config.settings.SELF === false ? 'selected' : '' %>>Disable</option>
+							</select>
+						</div>
+						<div class="flex flex-col gap-1">
+							<label class="text-xs md:text-sm">Self Group Command</label>
+							<select name="SELF_GROUP" class="p-2 rounded bg-gray-800 w-full focus:outline-none border border-gray-700">
+								<option value="true" <%= config.settings.SELF_GROUP === true ? 'selected' : '' %>>Enable</option>
+								<option value="false" <%= config.settings.SELF_GROUP === false ? 'selected' : '' %>>Disable</option>
 							</select>
 						</div>
 						<div class="flex flex-col gap-1">
@@ -155,7 +162,77 @@
 		
 		<div id="tab-command" class="tab-content active hidden">
 			<div class="w-full p-4 bg-gray-900 rounded">
-				<h2 class="text-2xl font-bold">Command Settings</h2>
+				<h2 class="text-2xl font-bold">Command Group</h2>
+				<form action="/settings-group" method="POST" class="flex flex-col gap-2 mt-4">
+					<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+						<div class="flex flex-col gap-1">
+							<label class="text-xs md:text-sm">Add Member</label>
+							<input name="CMD_ADD" class="p-2 rounded bg-gray-800 w-full focus:outline-none border border-gray-700" value="<%= config.cmdGroup.CMD_ADD %>" onkeydown="return event.key !== ' '" />
+							<span class="text-xs text-gray-300">e.g: 
+							<code class="bg-gray-700 px-1">.add</code> 
+							628xxx</span>
+						</div>
+						<div class="flex flex-col gap-1">
+							<label class="text-xs md:text-sm">Kick Member</label>
+							<input name="CMD_KICK" class="p-2 rounded bg-gray-800 w-full focus:outline-none border border-gray-700" value="<%= config.cmdGroup.CMD_KICK %>" onkeydown="return event.key !== ' '" />
+							<span class="text-xs text-gray-300">e.g: 
+							<code class="bg-gray-700">.kick</code> 
+							mention</span>
+						</div>
+						<div class="flex flex-col gap-1">
+							<label class="text-xs md:text-sm">Change Title Group</label>
+							<input name="CMD_TITLE" class="p-2 rounded bg-gray-800 w-full focus:outline-none border border-gray-700" value="<%= config.cmdGroup.CMD_TITLE %>" onkeydown="return event.key !== ' '" />
+							<span class="text-xs text-gray-300">e.g: 
+							<code class="bg-gray-700">.group-title</code> 
+							new title</span>
+						</div>
+						<div class="flex flex-col gap-1">
+							<label class="text-xs md:text-sm">Change Desc Group</label>
+							<input name="CMD_DESC" class="p-2 rounded bg-gray-800 w-full focus:outline-none border border-gray-700" value="<%= config.cmdGroup.CMD_DESC %>" onkeydown="return event.key !== ' '" />
+							<span class="text-xs text-gray-300">e.g: 
+							<code class="bg-gray-700">.group-desc</code> 
+							new desc</span>
+						</div>
+						<div class="flex flex-col gap-1">
+							<label class="text-xs md:text-sm">Promote Member</label>
+							<input name="CMD_PROMOTE" class="p-2 rounded bg-gray-800 w-full focus:outline-none border border-gray-700" value="<%= config.cmdGroup.CMD_PROMOTE %>" onkeydown="return event.key !== ' '" />
+							<span class="text-xs text-gray-300">e.g: 
+							<code class="bg-gray-700">.promote</code> 
+							mentionc</span>
+						</div>
+						<div class="flex flex-col gap-1">
+							<label class="text-xs md:text-sm">Demote Member</label>
+							<input name="CMD_DEMOTE" class="p-2 rounded bg-gray-800 w-full focus:outline-none border border-gray-700" value="<%= config.cmdGroup.CMD_DEMOTE %>" onkeydown="return event.key !== ' '" />
+							<span class="text-xs text-gray-300">e.g: 
+							<code class="bg-gray-700">.demote</code> 
+							mention</span>
+						</div>
+						<div class="flex flex-col gap-1">
+							<label class="text-xs md:text-sm">Lock Chat</label>
+							<input name="CMD_LOCK_CHAT" class="p-2 rounded bg-gray-800 w-full focus:outline-none border border-gray-700" value="<%= config.cmdGroup.CMD_LOCK_CHAT %>" onkeydown="return event.key !== ' '" />
+							<span class="text-xs text-gray-300">e.g: 
+							<code class="bg-gray-700">.lock-chat</code> 
+							</span>
+						</div>
+						<div class="flex flex-col gap-1">
+							<label class="text-xs md:text-sm">Unlock Chat</label>
+							<input name="CMD_UNLOCK_CHAT" class="p-2 rounded bg-gray-800 w-full focus:outline-none border border-gray-700" value="<%= config.cmdGroup.CMD_UNLOCK_CHAT %>" onkeydown="return event.key !== ' '" />
+							<span class="text-xs text-gray-300">e.g: 
+							<code class="bg-gray-700">.unlock-chat</code> 
+							</span>
+						</div>
+					</div>
+					<div class="flex justify-start mt-4">
+						<button type="submit" class="flex bg-gray-700 hover:bg-blue-700 px-4 py-2 rounded">
+							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6">
+							  <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+							</svg> 
+							Save
+						</button>
+					</div>
+				</form>
+				
+				<h2 class="text-2xl font-bold mt-9">Command Settings</h2>
 				<form action="/settings" method="POST" class="flex flex-col gap-2 mt-4">
 					
 					<h2 class="font-bold mt-4">Artificial Intelligence</h2>

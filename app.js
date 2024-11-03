@@ -50,7 +50,7 @@ const ManualResponse = {};
     sock.ev.on('messages.upsert', async (messageUpdate) => {
         const message = messageUpdate.messages[0];
         const sender = message.key.remoteJid;
-        const messageContent = message.message.conversation || message.message.extendedTextMessage?.text || 'Not detected!';
+        const messageContent = message.message && (message.message.conversation || message.message.extendedTextMessage?.text) || 'Not detected!';
 		const key = message.key;
 		
         let jsonResponse;
@@ -442,6 +442,14 @@ app.post('/settings', (req, res) => {
         CMD_EPUB: req.body.CMD_EPUB,
         CMD_ZIP: req.body.CMD_ZIP,
         CMD_GZ: req.body.CMD_GZ,
+        CMD_UNLOCK_CHAT: req.body.CMD_UNLOCK_CHAT,
+        CMD_LOCK_CHAT: req.body.CMD_LOCK_CHAT,
+        CMD_TITLE: req.body.CMD_TITLE,
+        CMD_DESC: req.body.CMD_DESC,
+        CMD_PROMOTE: req.body.CMD_PROMOTE,
+        CMD_DEMOTE: req.body.CMD_DEMOTE,
+        CMD_ADD: req.body.CMD_ADD,
+        CMD_KICK: req.body.CMD_KICK,
     };
 
     fs.readFile(configPath, 'utf8', (err, data) => {
@@ -459,10 +467,38 @@ app.post('/settings', (req, res) => {
     });
 });
 
+app.post('/settings-group', (req, res) => {
+    const newCommands = {
+        CMD_UNLOCK_CHAT: req.body.CMD_UNLOCK_CHAT,
+        CMD_LOCK_CHAT: req.body.CMD_LOCK_CHAT,
+        CMD_TITLE: req.body.CMD_TITLE,
+        CMD_DESC: req.body.CMD_DESC,
+        CMD_PROMOTE: req.body.CMD_PROMOTE,
+        CMD_DEMOTE: req.body.CMD_DEMOTE,
+        CMD_ADD: req.body.CMD_ADD,
+        CMD_KICK: req.body.CMD_KICK,
+    };
+
+    fs.readFile(configPath, 'utf8', (err, data) => {
+        if (err) {
+            return res.status(500).json({ error: 'Failed to read config file' });
+        }
+        const config = JSON.parse(data);
+        config.cmdGroup = { ...config.cmdGroup, ...newCommands };
+        fs.writeFile(configPath, JSON.stringify(config, null, 2), 'utf8', (err) => {
+            if (err) {
+                return res.status(500).json({ error: 'Failed to write config file' });
+            }
+            res.redirect('/settings');
+        });
+    });
+});
+
 app.post('/settings-utl', (req, res) => {
     const newCommands = {
         QR_URL: req.body.QR_URL === 'true',
         SELF: req.body.SELF === 'true',
+        SELF_GROUP: req.body.SELF_GROUP === 'true',
         ANTI_BADWORDS: req.body.ANTI_BADWORDS === 'true',
         ANTI_LINK: req.body.ANTI_LINK === 'true',
         GEMINI_API: req.body.GEMINI_API,

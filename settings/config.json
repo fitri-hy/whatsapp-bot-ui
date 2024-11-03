@@ -1,4 +1,14 @@
 {
+  "cmdGroup": {
+    "CMD_UNLOCK_CHAT": ".unlock-chat",
+    "CMD_LOCK_CHAT": ".lock-chat",
+    "CMD_TITLE": ".group-title",
+    "CMD_DESC": ".group-desc",
+    "CMD_PROMOTE": ".promote",
+    "CMD_DEMOTE": ".demote",
+    "CMD_ADD": ".add",
+    "CMD_KICK": ".kick"
+  },
   "cmd": {
     "CMD_GEMINI": ".ai",
     "CMD_GEMINI_IMG": ".aiimg",
@@ -67,6 +77,7 @@
   "settings": {
     "QR_URL": true,
     "SELF": false,
+    "SELF_GROUP": true,
     "ANTI_BADWORDS": false,
     "ANTI_LINK": false,
     "GEMINI_API": "AIzaxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",

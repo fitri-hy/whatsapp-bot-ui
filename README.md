@@ -37,6 +37,16 @@ WhatsApp Bot UI offers a user-friendly and responsive interface for managing a W
 ├• Random Words of Wisdom
 └• Random Quotes (e.g., Hecker, Dilan, Love Quotes)
 
+💬 GROUP
+├• Add Member
+├• Kick Member
+├• Change Title Group
+├• Change Desc Group
+├• Promote Member
+├• Demote Member
+├• Lock Chat
+└• Unlock Chat
+
 📦 Miscellaneous
 ├• Sticker Maker - Create stickers from images.
 ├• Text to Voice - Supports multiple languages.
@@ -71,6 +81,17 @@ npm install
 > If you like this WhatsApp Bot UI project, don't forget to give it a ⭐ star and fork it in our repository! Your support will be very meaningful and help us to continue developing more sophisticated and useful features.
 
 ### Change Log / Updates Features
+
+> **Version 1.6**
+> - [ADD] Add Member in Group
+> - [ADD] Kick Member in Group
+> - [ADD] Change Title Group in Group
+> - [ADD] Change Desc Group in Group
+> - [ADD] Promote Member in Group
+> - [ADD] Demote Member in Group
+> - [ADD] DLock Chat in Group
+> - [ADD] Unlock Chat in Group
+> - [ADD] Self Mode Group Command
 
 > **Version 1.5**
 > - [ADD] File Search
@@ -113,5 +134,5 @@ npm install
 > - [ADD] Wiki AI
 > - [ADD] Surah
 > - [ADD] Ayah Detail
-> - [ADD] Self Mode
+> - [ADD] Self Mode Command
 > - Initial Release
