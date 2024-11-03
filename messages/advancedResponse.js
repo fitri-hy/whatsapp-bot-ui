@@ -19,10 +19,27 @@ const { WikipediaAI, WikipediaSearch, WikipediaImage } = require('./utils/Wikipe
 const { Surah, SurahDetails } = require('./utils/Quran');
 const { AesEncryption, AesDecryption, CamelliaEncryption, CamelliaDecryption, ShaEncryption, Md5Encryption, RipemdEncryption, BcryptEncryption } = require('./utils/Encrypts.js');
 const { kataKataRandom, heckerRandom, dilanRandom, bucinRandom, quoteRandom } = require('./utils/Entertain.js');
-const { ProductPrices } = require('./utils/Google');
+const { ProductPrices, FileSearch } = require('./utils/Google');
 
 async function AdvancedResponse(messageContent, sender, sock, message) {
 	if ((config.settings.SELF && message.key.fromMe) || !config.settings.SELF) {
+		
+		const validFileTypes = [config.cmd.CMD_PDF, config.cmd.CMD_DOC, config.cmd.CMD_DOCX, config.cmd.CMD_XLS, config.cmd.CMD_XLSX, config.cmd.CMD_PPT, config.cmd.CMD_PPTX, config.cmd.CMD_TXT, config.cmd.CMD_HTML, config.cmd.CMD_HTM, config.cmd.CMD_CSV, config.cmd.CMD_RTF, config.cmd.CMD_ODT, config.cmd.CMD_ODS, config.cmd.CMD_ODP, config.cmd.CMD_EPUB, config.cmd.CMD_ZIP, config.cmd.CMD_GZ];
+		if (validFileTypes.some(type => messageContent.startsWith(`${type}`))) {
+			const parts = messageContent.split(' ');
+			const fileType = parts[0].substring(1);
+			const query = parts.slice(1).join(' ').trim();
+			await sock.sendMessage(sender, { react: { text: "⌛", key: message.key } });
+			try {
+				const responseMessage = await FileSearch(query, fileType);
+				await sock.sendMessage(sender, { text: responseMessage }, { quoted: message });
+				console.log(`Response: ${responseMessage}`);
+				await sock.sendMessage(sender, { react: { text: "✅", key: message.key } });
+			} catch (error) {
+				console.error('Error sending message:', error);
+				await sock.sendMessage(sender, { react: { text: "❌", key: message.key } });
+			}
+		}
 		
 		if (messageContent.startsWith(`${config.cmd.CMD_GOOGLE_PRODUCT} `)) {
 			const query = messageContent.replace(`${config.cmd.CMD_GOOGLE_PRODUCT} `, '').trim();

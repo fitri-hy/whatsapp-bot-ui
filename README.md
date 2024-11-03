@@ -57,6 +57,7 @@ Project provides an intuitive and responsive interface, allowing users to manage
 ├• Count Words
 ├• QRCode Generator
 ├• Translate Text
+├• File Search (PDF, DOC/X, XLS/X, PPT/X, TXT, HTM/L, CSV, RTF,ODT/S/P, EPUB, ZIP, GZ)
 ├• Anti Badwords
 ├• Anti Links
 ├• Check & Compare Product Price

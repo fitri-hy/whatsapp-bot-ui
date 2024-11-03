@@ -406,6 +406,136 @@
 						</div>
 					</div>
 					
+					<h2 class="font-bold mt-4">File Search</h2>
+					<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+						<div class="flex flex-col gap-1">
+							<label class="text-xs md:text-sm">PDF</label>
+							<input name="CMD_PDF" class="p-2 rounded bg-gray-800 w-full focus:outline-none border border-gray-700" value="<%= config.cmd.CMD_PDF %>" onkeydown="return event.key !== ' '" />
+							<span class="text-xs text-gray-300">e.g:
+							<code class="bg-gray-700">.pdf</code> 
+							query</span>
+						</div>
+						<div class="flex flex-col gap-1">
+							<label class="text-xs md:text-sm">DOC</label>
+							<input name="CMD_DOC" class="p-2 rounded bg-gray-800 w-full focus:outline-none border border-gray-700" value="<%= config.cmd.CMD_DOC %>" onkeydown="return event.key !== ' '" />
+							<span class="text-xs text-gray-300">e.g:
+							<code class="bg-gray-700">.doc</code> 
+							query</span>
+						</div>
+						<div class="flex flex-col gap-1">
+							<label class="text-xs md:text-sm">DOCX</label>
+							<input name="CMD_DOCX" class="p-2 rounded bg-gray-800 w-full focus:outline-none border border-gray-700" value="<%= config.cmd.CMD_DOCX %>" onkeydown="return event.key !== ' '" />
+							<span class="text-xs text-gray-300">e.g:
+							<code class="bg-gray-700">.docx</code> 
+							query</span>
+						</div>
+						<div class="flex flex-col gap-1">
+							<label class="text-xs md:text-sm">XLS</label>
+							<input name="CMD_XLS" class="p-2 rounded bg-gray-800 w-full focus:outline-none border border-gray-700" value="<%= config.cmd.CMD_XLS %>" onkeydown="return event.key !== ' '" />
+							<span class="text-xs text-gray-300">e.g:
+							<code class="bg-gray-700">.xls</code> 
+							query</span>
+						</div>
+						<div class="flex flex-col gap-1">
+							<label class="text-xs md:text-sm">XLSX</label>
+							<input name="CMD_XLSX" class="p-2 rounded bg-gray-800 w-full focus:outline-none border border-gray-700" value="<%= config.cmd.CMD_XLSX %>" onkeydown="return event.key !== ' '" />
+							<span class="text-xs text-gray-300">e.g:
+							<code class="bg-gray-700">.xlsx</code> 
+							query</span>
+						</div>
+						<div class="flex flex-col gap-1">
+							<label class="text-xs md:text-sm">PPT</label>
+							<input name="CMD_PPT" class="p-2 rounded bg-gray-800 w-full focus:outline-none border border-gray-700" value="<%= config.cmd.CMD_PPT %>" onkeydown="return event.key !== ' '" />
+							<span class="text-xs text-gray-300">e.g:
+							<code class="bg-gray-700">.ppt</code> 
+							query</span>
+						</div>
+						<div class="flex flex-col gap-1">
+							<label class="text-xs md:text-sm">PPTX</label>
+							<input name="CMD_PPTX" class="p-2 rounded bg-gray-800 w-full focus:outline-none border border-gray-700" value="<%= config.cmd.CMD_PPTX %>" onkeydown="return event.key !== ' '" />
+							<span class="text-xs text-gray-300">e.g:
+							<code class="bg-gray-700">.pptx</code> 
+							query</span>
+						</div>
+						<div class="flex flex-col gap-1">
+							<label class="text-xs md:text-sm">TXT</label>
+							<input name="CMD_TXT" class="p-2 rounded bg-gray-800 w-full focus:outline-none border border-gray-700" value="<%= config.cmd.CMD_TXT %>" onkeydown="return event.key !== ' '" />
+							<span class="text-xs text-gray-300">e.g:
+							<code class="bg-gray-700">.txt</code> 
+							query</span>
+						</div>
+						<div class="flex flex-col gap-1">
+							<label class="text-xs md:text-sm">HTML</label>
+							<input name="CMD_HTML" class="p-2 rounded bg-gray-800 w-full focus:outline-none border border-gray-700" value="<%= config.cmd.CMD_HTML %>" onkeydown="return event.key !== ' '" />
+							<span class="text-xs text-gray-300">e.g:
+							<code class="bg-gray-700">.html</code> 
+							query</span>
+						</div>
+						<div class="flex flex-col gap-1">
+							<label class="text-xs md:text-sm">HTM</label>
+							<input name="CMD_HTM" class="p-2 rounded bg-gray-800 w-full focus:outline-none border border-gray-700" value="<%= config.cmd.CMD_HTM %>" onkeydown="return event.key !== ' '" />
+							<span class="text-xs text-gray-300">e.g:
+							<code class="bg-gray-700">.htm</code> 
+							query</span>
+						</div>
+						<div class="flex flex-col gap-1">
+							<label class="text-xs md:text-sm">CSV</label>
+							<input name="CMD_CSV" class="p-2 rounded bg-gray-800 w-full focus:outline-none border border-gray-700" value="<%= config.cmd.CMD_CSV %>" onkeydown="return event.key !== ' '" />
+							<span class="text-xs text-gray-300">e.g:
+							<code class="bg-gray-700">.csv</code> 
+							query</span>
+						</div>
+						<div class="flex flex-col gap-1">
+							<label class="text-xs md:text-sm">RTF</label>
+							<input name="CMD_RTF" class="p-2 rounded bg-gray-800 w-full focus:outline-none border border-gray-700" value="<%= config.cmd.CMD_RTF %>" onkeydown="return event.key !== ' '" />
+							<span class="text-xs text-gray-300">e.g:
+							<code class="bg-gray-700">.rtf</code> 
+							query</span>
+						</div>
+						<div class="flex flex-col gap-1">
+							<label class="text-xs md:text-sm">ODT</label>
+							<input name="CMD_ODT" class="p-2 rounded bg-gray-800 w-full focus:outline-none border border-gray-700" value="<%= config.cmd.CMD_ODT %>" onkeydown="return event.key !== ' '" />
+							<span class="text-xs text-gray-300">e.g:
+							<code class="bg-gray-700">.odt</code> 
+							query</span>
+						</div>
+						<div class="flex flex-col gap-1">
+							<label class="text-xs md:text-sm">ODS</label>
+							<input name="CMD_ODS" class="p-2 rounded bg-gray-800 w-full focus:outline-none border border-gray-700" value="<%= config.cmd.CMD_ODS %>" onkeydown="return event.key !== ' '" />
+							<span class="text-xs text-gray-300">e.g:
+							<code class="bg-gray-700">.ods</code> 
+							query</span>
+						</div>
+						<div class="flex flex-col gap-1">
+							<label class="text-xs md:text-sm">ODP</label>
+							<input name="CMD_ODP" class="p-2 rounded bg-gray-800 w-full focus:outline-none border border-gray-700" value="<%= config.cmd.CMD_ODP %>" onkeydown="return event.key !== ' '" />
+							<span class="text-xs text-gray-300">e.g:
+							<code class="bg-gray-700">.odp</code> 
+							query</span>
+						</div>
+						<div class="flex flex-col gap-1">
+							<label class="text-xs md:text-sm">EPUB</label>
+							<input name="CMD_EPUB" class="p-2 rounded bg-gray-800 w-full focus:outline-none border border-gray-700" value="<%= config.cmd.CMD_EPUB %>" onkeydown="return event.key !== ' '" />
+							<span class="text-xs text-gray-300">e.g:
+							<code class="bg-gray-700">.epub</code> 
+							query</span>
+						</div>
+						<div class="flex flex-col gap-1">
+							<label class="text-xs md:text-sm">ZIP</label>
+							<input name="CMD_ZIP" class="p-2 rounded bg-gray-800 w-full focus:outline-none border border-gray-700" value="<%= config.cmd.CMD_ZIP %>" onkeydown="return event.key !== ' '" />
+							<span class="text-xs text-gray-300">e.g:
+							<code class="bg-gray-700">.zip</code> 
+							query</span>
+						</div>
+						<div class="flex flex-col gap-1">
+							<label class="text-xs md:text-sm">GZ</label>
+							<input name="CMD_GZ" class="p-2 rounded bg-gray-800 w-full focus:outline-none border border-gray-700" value="<%= config.cmd.CMD_GZ %>" onkeydown="return event.key !== ' '" />
+							<span class="text-xs text-gray-300">e.g:
+							<code class="bg-gray-700">.gz</code> 
+							query</span>
+						</div>
+					</div>
+					
 					<h2 class="font-bold mt-4">Miscellaneous</h2>
 					<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
 						<div class="flex flex-col gap-1">
