@@ -509,6 +509,7 @@ app.post('/settings-utl', (req, res) => {
         GEMINI_API: req.body.GEMINI_API,
         GEMINI_PROMPT: req.body.GEMINI_PROMPT,
         TO_VOICE: req.body.TO_VOICE,
+        WIKI_LANG: req.body.WIKI_LANG,
     };
 
     fs.readFile(configPath, 'utf8', (err, data) => {

@@ -140,6 +140,13 @@
 							</select>
 						</div>
 						<div class="flex flex-col gap-1">
+							<label class="text-xs md:text-sm">Wiki Language</label>
+							<select name="WIKI_LANG" class="p-2 rounded bg-gray-800 w-full focus:outline-none border border-gray-700">
+								<option value="id" <%= config.settings.WIKI_LANG === 'id' ? 'selected' : '' %>>Indonesia</option>
+								<option value="en" <%= config.settings.WIKI_LANG === 'en' ? 'selected' : '' %>>English</option>
+							</select>
+						</div>
+						<div class="flex flex-col gap-1">
 							<label class="text-xs md:text-sm">Gemini Api Keys <span class="text-[10px]"><a class="text-emerald-500 hover:text-emerald-600 underline" href="https://aistudio.google.com/" target="_blank">Get API</a></span></label>
 							<input name="GEMINI_API" class="p-2 rounded bg-gray-800 w-full focus:outline-none border border-gray-700" value="<%= config.settings.GEMINI_API %>" onkeydown="return event.key !== ' '" />
 						</div>

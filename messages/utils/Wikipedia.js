@@ -1,16 +1,20 @@
 const axios = require('axios');
+const fs = require('fs');
+const path = require('path');
+const configPath = path.join(__dirname, '../../settings/config.json');
+const config = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
 
 async function WikipediaAI(query, sock, sender, message) {
     await sock.sendMessage(sender, { react: { text: "⌛", key: message.key } });
 
     try {
-        const wikiApiUrl = `https://id.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}&format=json&utf8=1&origin=*`;
+        const wikiApiUrl = `https://${config.settings.WIKI_LANG}.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}&format=json&utf8=1&origin=*`;
         const response = await axios.get(wikiApiUrl);
         const searchResults = response.data.query.search;
 
         if (searchResults.length > 0) {
             const result = searchResults[0];
-           const responseMessage = `*${result.title}*\n\n${result.snippet.replace(/<[^>]+>/g, '')}...\n\nBaca lebih lanjut di: https://id.wikipedia.org/wiki/${encodeURIComponent(result.title)}`;
+           const responseMessage = `*${result.title}*\n\n${result.snippet.replace(/<[^>]+>/g, '')}...\n\nBaca lebih lanjut di: https://${config.settings.WIKI_LANG}.wikipedia.org/wiki/${encodeURIComponent(result.title)}`;
             console.log(`Response: ${responseMessage}`);
             return responseMessage;
         } else {
@@ -27,17 +31,17 @@ async function WikipediaSearch(query, sock, sender, message) {
     await sock.sendMessage(sender, { react: { text: "⌛", key: message.key } });
 
     try {
-        const wikiApiUrl = `https://id.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}&srlimit=10&format=json&utf8=1&origin=*`;
+        const wikiApiUrl = `https://${config.settings.WIKI_LANG}.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}&srlimit=10&format=json&utf8=1&origin=*`;
         const response = await axios.get(wikiApiUrl);
         const searchResults = response.data.query.search;
 
         if (searchResults.length > 0) {
-            let responseMessage = "Hasil pencarian:\n\n";
+            let responseMessage = "Search results:\n\n";
             
             for (const result of searchResults) {
                 const title = result.title;
                 const snippet = result.snippet.replace(/<[^>]+>/g, '');
-                responseMessage += `*${title}*\n${snippet}...\nBaca lebih lanjut di: https://id.wikipedia.org/wiki/${encodeURIComponent(title)}\n\n`;
+                responseMessage += `*${title}*\n${snippet}...\nRead more at: https://${config.settings.WIKI_LANG}.wikipedia.org/wiki/${encodeURIComponent(title)}\n\n`;
             }
 
             console.log(`Response: ${responseMessage}`);
@@ -54,7 +58,7 @@ async function WikipediaSearch(query, sock, sender, message) {
 
 async function WikipediaImage(query) {
     try {
-        const searchResponse = await axios.get(`https://id.wikipedia.org/w/api.php`, {
+        const searchResponse = await axios.get(`https://${config.settings.WIKI_LANG}.wikipedia.org/w/api.php`, {
             params: {
                 action: 'query',
                 format: 'json',
@@ -69,7 +73,7 @@ async function WikipediaImage(query) {
             await sock.sendMessage(sender, { react: { text: "❌", key: message.key } });
             return;
         }
-        const imageResponse = await axios.get(`https://id.wikipedia.org/w/api.php`, {
+        const imageResponse = await axios.get(`https://${config.settings.WIKI_LANG}.wikipedia.org/w/api.php`, {
             params: {
                 action: 'query',
                 format: 'json',
@@ -88,7 +92,7 @@ async function WikipediaImage(query) {
         }
         return { url: finalImageUrl, caption: `Image search results for: ${query}` };
     } catch (error) {
-        console.error("Error fetching Wikipedia image:", error); // Log the error for debugging
+        console.error("Error fetching Wikipedia image:", error);
         await sock.sendMessage(sender, { react: { text: "❌", key: message.key } });
     }
 }

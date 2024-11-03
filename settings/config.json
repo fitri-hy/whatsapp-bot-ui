@@ -87,7 +87,8 @@
     "ANTI_LINK": false,
     "GEMINI_API": "AIzaxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
     "GEMINI_PROMPT": "Anda harus berpura-pura menjadi Whastapp-Bot dan jawab pertanyaan menggunakan bahasa indonesia dengan singkat: ",
-    "TO_VOICE": "id"
+    "TO_VOICE": "id",
+    "WIKI_LANG": "id"
   },
   "excludeLinks": [
     "https://google.com",

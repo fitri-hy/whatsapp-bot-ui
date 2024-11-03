@@ -31,13 +31,13 @@ async function AdvancedResponse(messageContent, sender, sock, message) {
 			await sock.sendMessage(sender, { react: { text: "⌛", key: message.key } });
 			try {
 				const imagePath = await Certificate(name);
-				const caption = `Sertifikat untuk ${name} telah dibuat!`;
+				const caption = `Certificate for ${name} has been created!`;
 				await sock.sendMessage(sender, { image: { url: imagePath }, caption: caption }, { quoted: message });
 				await sock.sendMessage(sender, { react: { text: "✅", key: message.key } });
 				fs.unlinkSync(imagePath);
 			} catch (error) {
-				console.log(`Gagal membuat sertifikat untuk ${name}:`, error);
-				await sock.sendMessage(sender, { text: `Gagal membuat sertifikat untuk ${name}.`, react: { text: "❌", key: message.key } });
+				console.log(`Failed to create certificate for ${name}:`, error);
+				await sock.sendMessage(sender, { react: { text: "❌", key: message.key } });
 			}
 		}
 

@@ -23,7 +23,7 @@ async function Weather(cityName) {
     return weatherJson;
   } catch (error) {
     console.error('Error fetching weather:', error);
-    throw new Error('Tidak dapat mengambil data cuaca.');
+    throw new Error('Unable to retrieve weather data.');
   }
 }
 

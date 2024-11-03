@@ -7,7 +7,7 @@ async function readEntertainFile() {
         const data = await fs.readFile(entertainPath, 'utf8');
         return JSON.parse(data);
     } catch (err) {
-        console.error('Gagal membaca file:', err);
+        console.error('Failed to read file:', err);
         throw err; 
     }
 }
