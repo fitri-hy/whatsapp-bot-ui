@@ -10,6 +10,7 @@
     "CMD_KICK": ".kick"
   },
   "cmd": {
+    "CMD_CERTIFICATE": ".certificate",
     "CMD_VULNERABILITY": ".check",
     "CMD_HTTP_LOCKUP": ".http",
     "CMD_SSL_LOCKUP": ".ssl",

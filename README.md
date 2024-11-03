@@ -60,6 +60,7 @@ WhatsApp Bot UI offers a user-friendly and responsive interface for managing a W
 ├• Custom Responses - Auto/manual response customization.
 ├• Tools Lockup (DNS, SSL, HTTP)
 ├• Domain Check Vulnerability
+├• Certificate Maker
 └• New Features Comming soon ...
 ```
 
@@ -93,6 +94,7 @@ npm install
 > - [ADD] Self Mode Group Command
 > - [ADD] Domain Check Vulnerability
 > - [ADD] Tools Lockup (DNS, SSL, HTTP)
+> - [ADD] Certificate Maker
 
 > **Version 1.5**
 > - [ADD] File Search

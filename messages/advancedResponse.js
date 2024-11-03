@@ -21,10 +21,26 @@ const { AesEncryption, AesDecryption, CamelliaEncryption, CamelliaDecryption, Sh
 const { kataKataRandom, heckerRandom, dilanRandom, bucinRandom, quoteRandom } = require('./utils/Entertain.js');
 const { ProductPrices, FileSearch } = require('./utils/Google');
 const { dnsLookup, sslLookup, httpHeadersLookup, CheckVulnerability } = require('./utils/Tools');
+const { Certificate } = require('./utils/ImageGenerator');
 
 async function AdvancedResponse(messageContent, sender, sock, message) {
 	if ((config.settings.SELF && message.key.fromMe) || !config.settings.SELF) {
 		
+		if (messageContent.startsWith(`${config.cmd.CMD_CERTIFICATE} `)) {
+			const name = messageContent.replace(`${config.cmd.CMD_CERTIFICATE} `, '').trim();
+			await sock.sendMessage(sender, { react: { text: "⌛", key: message.key } });
+			try {
+				const imagePath = await Certificate(name);
+				const caption = `Sertifikat untuk ${name} telah dibuat!`;
+				await sock.sendMessage(sender, { image: { url: imagePath }, caption: caption }, { quoted: message });
+				await sock.sendMessage(sender, { react: { text: "✅", key: message.key } });
+				fs.unlinkSync(imagePath);
+			} catch (error) {
+				console.log(`Gagal membuat sertifikat untuk ${name}:`, error);
+				await sock.sendMessage(sender, { text: `Gagal membuat sertifikat untuk ${name}.`, react: { text: "❌", key: message.key } });
+			}
+		}
+
 		if (messageContent.startsWith(`${config.cmd.CMD_VULNERABILITY} `)) {
 			const domain = messageContent.replace(`${config.cmd.CMD_VULNERABILITY} `, '').trim();
 			await sock.sendMessage(sender, { react: { text: "⌛", key: message.key } });
