@@ -20,20 +20,20 @@ const { Surah, SurahDetails } = require('./utils/Quran');
 const { AesEncryption, AesDecryption, CamelliaEncryption, CamelliaDecryption, ShaEncryption, Md5Encryption, RipemdEncryption, BcryptEncryption } = require('./utils/Encrypts.js');
 const { kataKataRandom, heckerRandom, dilanRandom, bucinRandom, quoteRandom } = require('./utils/Entertain.js');
 const { ProductPrices, FileSearch } = require('./utils/Google');
-const { dnsLookup, sslLookup, httpHeadersLookup } = require('./utils/Tools');
+const { dnsLookup, sslLookup, httpHeadersLookup, CheckVulnerability } = require('./utils/Tools');
 
 async function AdvancedResponse(messageContent, sender, sock, message) {
 	if ((config.settings.SELF && message.key.fromMe) || !config.settings.SELF) {
 		
-		if (messageContent.startsWith(`${config.cmd.CMD_HTTP_LOCKUP} `)) {
-			const domain = messageContent.replace(`${config.cmd.CMD_HTTP_LOCKUP} `, '').trim();
+		if (messageContent.startsWith(`${config.cmd.CMD_VULNERABILITY} `)) {
+			const domain = messageContent.replace(`${config.cmd.CMD_VULNERABILITY} `, '').trim();
 			await sock.sendMessage(sender, { react: { text: "⌛", key: message.key } });
 			try {
-				const headersResult = await httpHeadersLookup(domain);
-				await sock.sendMessage(sender, { text: headersResult }, { quoted: message });
+				const ResultVulnerability = await CheckVulnerability(domain);
+				await sock.sendMessage(sender, { text: ResultVulnerability }, { quoted: message });
 				await sock.sendMessage(sender, { react: { text: "✅", key: message.key } });
 			} catch (error) {
-				console.log(`Failed to lookup HTTP headers for ${domain}:`, error);
+				console.log(`Failed to lookup HTTP headers or vulnerabilities for ${domain}:`, error);
 				await sock.sendMessage(sender, { react: { text: "❌", key: message.key } });
 			}
 		}

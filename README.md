@@ -59,6 +59,7 @@ WhatsApp Bot UI offers a user-friendly and responsive interface for managing a W
 ├• Product Price Comparison - Check and compare prices.
 ├• Custom Responses - Auto/manual response customization.
 ├• Tools Lockup (DNS, SSL, HTTP)
+├• Domain Check Vulnerability
 └• New Features Comming soon ...
 ```
 
@@ -90,6 +91,7 @@ npm install
 > - [ADD] DLock Chat in Group
 > - [ADD] Unlock Chat in Group
 > - [ADD] Self Mode Group Command
+> - [ADD] Domain Check Vulnerability
 > - [ADD] Tools Lockup (DNS, SSL, HTTP)
 
 > **Version 1.5**
