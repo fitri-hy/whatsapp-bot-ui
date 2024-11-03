@@ -31,7 +31,7 @@ async function Certificate(name) {
         path: screenshotPath,
         type: 'jpeg',
         quality: 90,
-        fullPage: true
+        fullPage: false
     });
     await browser.close();
     return screenshotPath;
