@@ -38,14 +38,10 @@ WhatsApp Bot UI offers a user-friendly and responsive interface for managing a W
 └• Random Quotes (e.g., Hecker, Dilan, Love Quotes)
 
 💬 GROUP
-├• Add Member
-├• Kick Member
-├• Change Title Group
-├• Change Desc Group
-├• Promote Member
-├• Demote Member
-├• Lock Chat
-└• Unlock Chat
+├• Add & Kick Member
+├• Change Title & Desc Group
+├• Promote & Demote Member
+└• Lock & Unlock Chat
 
 📦 Miscellaneous
 ├• Sticker Maker - Create stickers from images.
