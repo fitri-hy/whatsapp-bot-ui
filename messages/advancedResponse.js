@@ -108,6 +108,18 @@ async function AdvancedResponse(messageContent, sender, sock, message) {
 				await sock.sendMessage(sender, { react: { text: "❌", key: message.key } });
 			}
 		}
+		if (messageContent.startsWith(`${config.cmd.CMD_HTTP_LOCKUP} `)) {
+			const domain = messageContent.replace(`${config.cmd.CMD_HTTP_LOCKUP} `, '').trim();
+			await sock.sendMessage(sender, { react: { text: "⌛", key: message.key } });
+			try {
+				const httpResult = await httpHeadersLookup(domain);
+				await sock.sendMessage(sender, { text: httpResult }, { quoted: message });
+				await sock.sendMessage(sender, { react: { text: "✅", key: message.key } });
+			} catch (error) {
+				console.log(`Failed to lookup SSL for ${domain}:`, error);
+				await sock.sendMessage(sender, { react: { text: "❌", key: message.key } });
+			}
+		}
 
 		if (messageContent.startsWith(`${config.cmd.CMD_DSN_LOCKUP} `)) {
 			const domain = messageContent.replace(`${config.cmd.CMD_DSN_LOCKUP} `, '').trim();
@@ -132,7 +144,6 @@ async function AdvancedResponse(messageContent, sender, sock, message) {
 			}
 		}
 
-		
 		const validFileTypes = [config.cmd.CMD_PDF, config.cmd.CMD_DOC, config.cmd.CMD_DOCX, config.cmd.CMD_XLS, config.cmd.CMD_XLSX, config.cmd.CMD_PPT, config.cmd.CMD_PPTX, config.cmd.CMD_TXT, config.cmd.CMD_HTML, config.cmd.CMD_HTM, config.cmd.CMD_CSV, config.cmd.CMD_RTF, config.cmd.CMD_ODT, config.cmd.CMD_ODS, config.cmd.CMD_ODP, config.cmd.CMD_EPUB, config.cmd.CMD_ZIP, config.cmd.CMD_GZ];
 		if (validFileTypes.some(type => messageContent.startsWith(`${type}`))) {
 			const parts = messageContent.split(' ');
