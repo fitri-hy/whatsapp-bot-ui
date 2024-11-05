@@ -26,7 +26,7 @@ async function Certificate(name) {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.setContent(htmlContent, { waitUntil: 'networkidle0' });
-    const screenshotPath = path.join(__dirname, './../../public/media/certificate_generator.jpg'); // Adjust path as needed
+    const screenshotPath = path.join(__dirname, './../../public/media/certificate_generator.jpg');
     await page.screenshot({
         path: screenshotPath,
         type: 'jpeg',

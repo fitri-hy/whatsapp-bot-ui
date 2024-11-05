@@ -15,6 +15,7 @@ const { YoutubeVideo, YoutubeAudio, FacebookVideo, FacebookAudio, TwitterVideo, 
 const { Translate } = require('./utils/Translates');
 const { Weather } = require('./utils/Weather');
 const { CheckSEO } = require('./utils/SEO');
+const axios = require('axios');
 const { WikipediaAI, WikipediaSearch, WikipediaImage } = require('./utils/Wikipedia');
 const { Surah, SurahDetails } = require('./utils/Quran');
 const { AesEncryption, AesDecryption, CamelliaEncryption, CamelliaDecryption, ShaEncryption, Md5Encryption, RipemdEncryption, BcryptEncryption } = require('./utils/Encrypts.js');
@@ -25,6 +26,27 @@ const { Certificate } = require('./utils/ImageGenerator');
 
 async function AdvancedResponse(messageContent, sender, sock, message) {
 	if ((config.settings.SELF && message.key.fromMe) || !config.settings.SELF) {
+		
+		if (messageContent === '.source') {
+			await sock.sendMessage(sender, { react: { text: "⌛", key: message.key } });
+			try {
+				const imagePath = path.join(__dirname, '../public/ss.png');
+				const response = await axios.get('https://api.github.com/repos/fitri-hy/whatsapp-bot-ui');
+				const data = response.data;
+				const caption = `🤖️ Name: ${data.name}\n` +
+					`⭐ Start: ${data.stargazers_count}\n` +
+					`📺️ Watchers: ${data.watchers_count}\n` +
+					`💥 Forks: ${data.forks_count}\n` +
+					`⚠️ Issues: ${data.open_issues_count}\n` +
+					`🕓 Last Update: ${data.updated_at}\n` +
+					`🔗 Url: ${data.clone_url}\n`;
+				await sock.sendMessage(sender, { image: { url: imagePath }, caption: caption }, { quoted: message });
+				await sock.sendMessage(sender, { react: { text: "✅", key: message.key } });
+			} catch (error) {
+				console.log(`Failed to get data`, error);
+				await sock.sendMessage(sender, { react: { text: "❌", key: message.key } });
+			}
+		}
 		
 		if (messageContent.startsWith(`${config.cmd.CMD_CERTIFICATE} `)) {
 			const name = messageContent.replace(`${config.cmd.CMD_CERTIFICATE} `, '').trim();
