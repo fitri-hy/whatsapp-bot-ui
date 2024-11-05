@@ -39,7 +39,7 @@ async function AdvancedResponse(messageContent, sender, sock, message) {
 					await sock.sendMessage(sender, { image: { url: imagePath }, caption }, { quoted: message });
 					await sock.sendMessage(sender, { react: { text: "✅", key: message.key } });
 				} else {
-					await sock.sendMessage(sender, { text: "No wallpapers found for your search query.", quoted: message });
+					await sock.sendMessage(sender, { text: "No wallpapers found for your search query."}, { quoted: message });
 					await sock.sendMessage(sender, { react: { text: "❌", key: message.key } });
 				}
 			} catch (error) {
