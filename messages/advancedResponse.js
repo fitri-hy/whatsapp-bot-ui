@@ -22,10 +22,31 @@ const { AesEncryption, AesDecryption, CamelliaEncryption, CamelliaDecryption, Sh
 const { kataKataRandom, heckerRandom, dilanRandom, bucinRandom, quoteRandom } = require('./utils/Entertain.js');
 const { ProductPrices, FileSearch } = require('./utils/Google');
 const { dnsLookup, sslLookup, httpHeadersLookup, CheckVulnerability } = require('./utils/Tools');
-const { Certificate } = require('./utils/ImageGenerator');
+const { Certificate, Wallpaper } = require('./utils/ImageGenerator');
 
 async function AdvancedResponse(messageContent, sender, sock, message) {
 	if ((config.settings.SELF && message.key.fromMe) || !config.settings.SELF) {
+	
+		if (messageContent.startsWith(`${config.cmd.CMD_WALLPAPER} `)) {
+			const name = messageContent.replace(`${config.cmd.CMD_WALLPAPER} `, '').trim();
+			await sock.sendMessage(sender, { react: { text: "⌛", key: message.key } });
+			try {
+				const wallpapers = await Wallpaper(name);
+				if (wallpapers.length > 0) {
+					const { title, image, source } = wallpapers[0];
+					const imagePath = image[0];
+					const caption = `Results from ${name}`;
+					await sock.sendMessage(sender, { image: { url: imagePath }, caption }, { quoted: message });
+					await sock.sendMessage(sender, { react: { text: "✅", key: message.key } });
+				} else {
+					await sock.sendMessage(sender, { text: "No wallpapers found for your search query.", quoted: message });
+					await sock.sendMessage(sender, { react: { text: "❌", key: message.key } });
+				}
+			} catch (error) {
+				console.error(`Failed to get data:`, error);
+				await sock.sendMessage(sender, { react: { text: "❌", key: message.key } });
+			}
+		}
 		
 		if (messageContent === '.source') {
 			await sock.sendMessage(sender, { react: { text: "⌛", key: message.key } });

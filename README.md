@@ -61,6 +61,7 @@ WhatsApp Bot UI offers a user-friendly and responsive interface for managing a W
 ├• Tools Lockup (DNS, SSL, HTTP)
 ├• Domain Check Vulnerability
 ├• Certificate Maker
+├• Wallpaper Generator
 └• New Features Comming soon ...
 ```
 
@@ -95,6 +96,7 @@ npm install
 > - [ADD] Domain Check Vulnerability
 > - [ADD] Tools Lockup (DNS, SSL, HTTP)
 > - [ADD] Certificate Maker
+> - [ADD] Wallpaper Generator
 
 > **Version 1.5**
 > - [ADD] File Search

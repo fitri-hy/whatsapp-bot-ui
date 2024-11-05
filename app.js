@@ -379,6 +379,7 @@ app.post('/update-link', (req, res) => {
 
 app.post('/settings', (req, res) => {
     const newCommands = {
+        CMD_WALLPAPER: req.body.CMD_WALLPAPER,
         CMD_CERTIFICATE: req.body.CMD_CERTIFICATE,
         CMD_VULNERABILITY: req.body.CMD_VULNERABILITY,
         CMD_HTTP_LOCKUP: req.body.CMD_HTTP_LOCKUP,

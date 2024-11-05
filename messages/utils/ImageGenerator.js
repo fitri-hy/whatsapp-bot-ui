@@ -1,5 +1,29 @@
 const puppeteer = require('puppeteer');
 const path = require('path');
+const axios = require('axios');
+const cheerio = require('cheerio');
+
+async function Wallpaper(title, page = '1') {
+	try {
+		const { data } = await axios.get(`https://www.besthdwallpaper.com/search?CurrentPage=${page}&q=${title}`);
+		const $ = cheerio.load(data);
+		const results = [];
+		$('div.grid-item').each((index, element) => {
+			const title = $(element).find('div.info > a > h3').text().trim();
+			const type = $(element).find('div.info > a:nth-child(2)').text().trim();
+			const source = 'https://www.besthdwallpaper.com/' + $(element).find('div > a:nth-child(3)').attr('href');
+			const image = [
+				$(element).find('picture > img').attr('data-src') || $(element).find('picture > img').attr('src'),
+				$(element).find('picture > source:nth-child(1)').attr('srcset'),
+				$(element).find('picture > source:nth-child(2)').attr('srcset')
+			];
+			results.push({ title, type, source, image });
+		});
+		return results;
+	} catch (error) {
+		throw new Error(`Error fetching data: ${error.message}`);
+	}
+}
 
 async function Certificate(name) {
     const htmlContent = `
@@ -37,4 +61,4 @@ async function Certificate(name) {
     return screenshotPath;
 }
 
-module.exports = { Certificate };
+module.exports = { Certificate, Wallpaper };
