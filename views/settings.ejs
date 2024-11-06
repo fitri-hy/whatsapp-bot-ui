@@ -38,7 +38,7 @@
     <header class="w-full flex justify-between px-4 py-3 bg-gray-700">
         <a href="/dashboard" class="flex">
             <img src="/ss.png" class="h-9 w-auto" alt="FHY WaBotUI">
-			<span class="text-xs font-bold text-gray-300">v1.6</span>
+			<span class="text-xs font-bold text-gray-300">v1.7</span>
         </a>
         <div class="gap-2 items-center flex">
 			<button class="relative bg-gray-900 hover:bg-gray-800 text-white p-2 rounded group" id="restartServerButton">
@@ -750,10 +750,24 @@
 							name</span>
 						</div>
 						<div class="flex flex-col gap-1">
-							<label class="text-xs md:text-sm">Walpaper Generator</label>
+							<label class="text-xs md:text-sm">Walpaper</label>
 							<input name="CMD_WALLPAPER" class="p-2 rounded bg-gray-800 w-full focus:outline-none border border-gray-700" value="<%= config.cmd.CMD_WALLPAPER %>" onkeydown="return event.key !== ' '" />
 							<span class="text-xs text-gray-300">e.g: 
 							<code class="bg-gray-700">.wallpaper</code>  
+							query</span>
+						</div>
+						<div class="flex flex-col gap-1">
+							<label class="text-xs md:text-sm">Ringtone</label>
+							<input name="CMD_RINGTONE" class="p-2 rounded bg-gray-800 w-full focus:outline-none border border-gray-700" value="<%= config.cmd.CMD_RINGTONE %>" onkeydown="return event.key !== ' '" />
+							<span class="text-xs text-gray-300">e.g: 
+							<code class="bg-gray-700">.ringtone</code>  
+							query</span>
+						</div>
+						<div class="flex flex-col gap-1">
+							<label class="text-xs md:text-sm">App Playstore</label>
+							<input name="CMD_PLAYSTORE" class="p-2 rounded bg-gray-800 w-full focus:outline-none border border-gray-700" value="<%= config.cmd.CMD_PLAYSTORE %>" onkeydown="return event.key !== ' '" />
+							<span class="text-xs text-gray-300">e.g: 
+							<code class="bg-gray-700">.playstore</code>  
 							query</span>
 						</div>
 					</div>

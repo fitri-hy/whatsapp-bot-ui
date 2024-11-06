@@ -61,7 +61,9 @@ WhatsApp Bot UI offers a user-friendly and responsive interface for managing a W
 ├• Tools Lockup (DNS, SSL, HTTP)
 ├• Domain Check Vulnerability
 ├• Certificate Maker
-├• Wallpaper Generator
+├• Wallpaper
+├• Ringtone
+├• Apps Search
 └• New Features Comming soon ...
 ```
 
@@ -82,6 +84,10 @@ npm install
 > If you like this WhatsApp Bot UI project, don't forget to give it a ⭐ star and fork it in our repository! Your support will be very meaningful and help us to continue developing more sophisticated and useful features.
 
 ### Change Log / Updates Features
+
+> **Version 1.7**
+> - [ADD] Ringtone
+> - [ADD] Apps Search
 
 > **Version 1.6**
 > - [ADD] Add Member in Group

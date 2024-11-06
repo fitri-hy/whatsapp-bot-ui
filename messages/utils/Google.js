@@ -104,4 +104,35 @@ async function FileSearch(query, searchType = 'pdf') {
     }
 }
 
-module.exports = { ProductPrices, FileSearch };
+async function PlayStore(query) {
+  try {
+    const url = `https://play.google.com/store/search?q=${query}`;
+    const response = await axios.get(url);
+    const $ = cheerio.load(response.data);
+    const results = [];
+    let count = 0;
+    $('div.VfPpkd-aGsRMb').each((index, element) => {
+      if (count < 15) {
+        const title = $(element).find('span.DdYX5').text().trim();
+        const developer = $(element).find('span.wMUdtb').text().trim();
+        const link = $(element).find('a').attr('href');
+        const images = $(element).find('img.T75of').attr('src');
+        if (title && developer && link && images) {
+          results.push({
+            title,
+            developer,
+            link: `https://play.google.com${link}`,
+            images
+          });
+          count++;
+        }
+      }
+    });
+    return results;
+  } catch (error) {
+    console.error("Error fetching Play Store data:", error);
+    throw new Error("Failed to fetch Play Store data.");
+  }
+}
+
+module.exports = { ProductPrices, FileSearch, PlayStore };

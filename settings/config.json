@@ -10,6 +10,8 @@
     "CMD_KICK": ".kick"
   },
   "cmd": {
+    "CMD_PLAYSTORE": ".playstore",
+    "CMD_RINGTONE": ".ringtone",
     "CMD_WALLPAPER": ".wallpaper",
     "CMD_CERTIFICATE": ".certificate",
     "CMD_VULNERABILITY": ".check",
