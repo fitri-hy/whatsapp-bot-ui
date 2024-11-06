@@ -101,6 +101,55 @@ const ManualResponse = {};
         await AdvancedResponse(messageContent, sender, sock, message, key );
 		
     });
+	
+	sock.ev.on('group-participants.update', async (update) => {
+        const { id, participants, action } = update;
+		for (let participant of participants) {
+			try {
+				const profilePicUrl = await sock.profilePictureUrl(participant, 'image');
+				let message, caption;
+				const username = participant.split('@')[0];
+				if (config.cmdGroup.CMD_WELCOME) {
+					if (action === 'add') {
+						caption = config.cmdGroup.CMD_WELCOME_TEXT.replace('{{username}}', username);
+						if (profilePicUrl) {
+							message = {
+								image: { url: profilePicUrl },
+								caption: caption,
+								mentions: [participant]
+							};
+						} else {
+							message = {
+								text: caption,
+								mentions: [participant]
+							};
+						}
+						await sock.sendMessage(id, message);
+					}
+				}
+				if (config.cmdGroup.CMD_GOODBYE) {
+					if (action === 'remove') {
+						caption = config.cmdGroup.CMD_GOODBYE_TEXT.replace('{{username}}', username);
+						if (profilePicUrl) {
+							message = {
+								image: { url: profilePicUrl },
+								caption: caption,
+								mentions: [participant]
+							};
+						} else {
+							message = {
+								text: caption,
+								mentions: [participant]
+							};
+						}
+						await sock.sendMessage(id, message);
+					}
+				}
+			} catch (error) {
+				console.error('Gagal mendapatkan foto profil:', error);
+			}
+		}
+	});
 })();
 
 const wss = new WebSocketServer({ noServer: true });
@@ -353,6 +402,30 @@ app.post('/settings/quote', (req, res) => {
     });
 });
 
+app.post('/edit-welcome', (req, res) => {
+    try {
+        const welcomeGreeting = req.body.welcomeGreeting.trim();
+        config.cmdGroup.CMD_WELCOME_TEXT = welcomeGreeting;
+        fs.writeFileSync(configPath, JSON.stringify(config, null, 2), 'utf-8');
+        res.redirect('/settings');
+    } catch (err) {
+        console.error('Failed to save text:', err);
+        res.status(500).json({ error: 'Failed to save text' });
+    }
+});
+
+app.post('/edit-goodbye', (req, res) => {
+    try {
+        const goodbyeGreeting = req.body.goodbyeGreeting.trim();
+        config.cmdGroup.CMD_GOODBYE_TEXT = goodbyeGreeting;
+        fs.writeFileSync(configPath, JSON.stringify(config, null, 2), 'utf-8');
+        res.redirect('/settings');
+    } catch (err) {
+        console.error('Failed to save text:', err);
+        res.status(500).json({ error: 'Failed to save text' });
+    }
+});
+
 app.post('/update-badwords', (req, res) => {
     try {
         const badwordsArray = req.body.badwords.split(',').map(word => word.trim()).filter(word => word);
@@ -477,6 +550,8 @@ app.post('/settings', (req, res) => {
 
 app.post('/settings-group', (req, res) => {
     const newCommands = {
+        CMD_WELCOME: req.body.CMD_WELCOME === 'true',
+        CMD_GOODBYE: req.body.CMD_GOODBYE === 'true',
         CMD_UNLOCK_CHAT: req.body.CMD_UNLOCK_CHAT,
         CMD_LOCK_CHAT: req.body.CMD_LOCK_CHAT,
         CMD_TITLE: req.body.CMD_TITLE,

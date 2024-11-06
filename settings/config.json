@@ -1,5 +1,9 @@
 {
   "cmdGroup": {
+    "CMD_WELCOME": false,
+    "CMD_GOODBYE": false,
+    "CMD_WELCOME_TEXT": "🎉 Selamat datang di grup, @{{username}}! Semoga betah dan bisa berkontribusi di sini. Jangan sungkan untuk bertanya atau berbagi informasi! 😊",
+    "CMD_GOODBYE_TEXT": "👋 Selamat tinggal, @{{username}}! Terima kasih telah bergabung bersama kami. Semoga sukses dan sampai jumpa di lain kesempatan! 🌟",
     "CMD_UNLOCK_CHAT": ".unlock-chat",
     "CMD_LOCK_CHAT": ".lock-chat",
     "CMD_TITLE": ".group-title",

@@ -77,9 +77,9 @@ npm install
 
 ### Running the Server
 
-- Windows: Double-click `start-win.bat`
-- Linux/Termux: Run `./start.sh` in terminal
-- Frontend Access: `http://localhost:3000/`
+```
+npm start
+```
 
 > If you like this WhatsApp Bot UI project, don't forget to give it a ⭐ star and fork it in our repository! Your support will be very meaningful and help us to continue developing more sophisticated and useful features.
 
@@ -88,6 +88,8 @@ npm install
 > **Version 1.7**
 > - [ADD] Ringtone
 > - [ADD] Apps Search
+> - [ADD] Welcome Greetings (Group)
+> - [ADD] Goodbye Greetings (Group)
 
 > **Version 1.6**
 > - [ADD] Add Member in Group

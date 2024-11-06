@@ -173,6 +173,20 @@
 				<form action="/settings-group" method="POST" class="flex flex-col gap-2 mt-4">
 					<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
 						<div class="flex flex-col gap-1">
+							<label class="text-xs md:text-sm">Welcome Greetings <a href="#" id="buttonWelcome" class="text-xs text-emerald-500 hover:text-emerald-600 underline">Edit</a></label>
+							<select name="CMD_WELCOME" class="p-2 rounded bg-gray-800 w-full focus:outline-none border border-gray-700">
+								<option value="true" <%= config.cmdGroup.CMD_WELCOME === true ? 'selected' : '' %>>Enable</option>
+								<option value="false" <%= config.cmdGroup.CMD_WELCOME === false ? 'selected' : '' %>>Disable</option>
+							</select>
+						</div>
+						<div class="flex flex-col gap-1">
+							<label class="text-xs md:text-sm">Goodbye Greetings <a href="#" id="buttonGoodbye" class="text-xs text-emerald-500 hover:text-emerald-600 underline">Edit</a></label>
+							<select name="CMD_GOODBYE" class="p-2 rounded bg-gray-800 w-full focus:outline-none border border-gray-700">
+								<option value="true" <%= config.cmdGroup.CMD_GOODBYE === true ? 'selected' : '' %>>Enable</option>
+								<option value="false" <%= config.cmdGroup.CMD_GOODBYE === false ? 'selected' : '' %>>Disable</option>
+							</select>
+						</div>
+						<div class="flex flex-col gap-1">
 							<label class="text-xs md:text-sm">Add Member</label>
 							<input name="CMD_ADD" class="p-2 rounded bg-gray-800 w-full focus:outline-none border border-gray-700" value="<%= config.cmdGroup.CMD_ADD %>" onkeydown="return event.key !== ' '" />
 							<span class="text-xs text-gray-300">e.g: 
@@ -1084,6 +1098,60 @@
 		</div>
 	</div>
 	
+	<div id="modalWelcome" class="hidden fixed inset-0 bg-gray-800 bg-opacity-90 flex items-center justify-center">
+		<div class="bg-gray-700 rounded-lg w-full max-w-3xl shadow-lg p-6">
+			<div class="flex flex-col gap-1 mb-4">
+				<h2 class="text-xl text-center font-semibold">Edit Welcome Text</h2>
+			</div>
+			<form action="/edit-welcome" method="POST">
+				<div class="flex">
+					<textarea name="welcomeGreeting" class="p-4 w-full bg-gray-800 rounded overflow-auto h-[75vh] focus:outline-none" placeholder="Enter text..."><%= config.cmdGroup.CMD_WELCOME_TEXT %></textarea>
+				</div>
+				<div class="flex justify-end gap-2 mt-4">
+					<button type="submit" class="bg-gray-800 flex items-center gap-2 hover:bg-blue-800 text-white px-4 py-2 rounded">
+						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6">
+							<path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+						</svg> 
+						Save
+					</button>
+					<button type="button" id="closeModalWelcome" class="bg-gray-800 flex items-center gap-2 hover:bg-red-800 text-white px-4 py-2 rounded">
+						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+						  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+						</svg>
+						Close
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	
+	<div id="modalGoodbye" class="hidden fixed inset-0 bg-gray-800 bg-opacity-90 flex items-center justify-center">
+		<div class="bg-gray-700 rounded-lg w-full max-w-3xl shadow-lg p-6">
+			<div class="flex flex-col gap-1 mb-4">
+				<h2 class="text-xl text-center font-semibold">Edit Welcome Text</h2>
+			</div>
+			<form action="/edit-goodbye" method="POST">
+				<div class="flex">
+					<textarea name="goodbyeGreeting" class="p-4 w-full bg-gray-800 rounded overflow-auto h-[75vh] focus:outline-none" placeholder="Enter text..."><%= config.cmdGroup.CMD_GOODBYE_TEXT %></textarea>
+				</div>
+				<div class="flex justify-end gap-2 mt-4">
+					<button type="submit" class="bg-gray-800 flex items-center gap-2 hover:bg-blue-800 text-white px-4 py-2 rounded">
+						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6">
+							<path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+						</svg> 
+						Save
+					</button>
+					<button type="button" id="closeModalGoodbye" class="bg-gray-800 flex items-center gap-2 hover:bg-red-800 text-white px-4 py-2 rounded">
+						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+						  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+						</svg>
+						Close
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	
 	<script>
 		$('#table-custom').DataTable({
 			"pageLength": 30,
@@ -1260,6 +1328,26 @@
         });
         closeModalQuote.addEventListener('click', () => {
             modalQuote.classList.add('hidden');
+        });
+		
+		const modalWelcome = document.getElementById('modalWelcome');
+        const buttonWelcome = document.getElementById('buttonWelcome');
+        const closeModalWelcome = document.getElementById('closeModalWelcome');
+        buttonWelcome.addEventListener('click', () => {
+            modalWelcome.classList.remove('hidden');
+        });
+        closeModalWelcome.addEventListener('click', () => {
+            modalWelcome.classList.add('hidden');
+        });
+		
+		const modalGoodbye = document.getElementById('modalGoodbye');
+        const buttonGoodbye = document.getElementById('buttonGoodbye');
+        const closeModalGoodbye = document.getElementById('closeModalGoodbye');
+        buttonGoodbye.addEventListener('click', () => {
+            modalGoodbye.classList.remove('hidden');
+        });
+        closeModalGoodbye.addEventListener('click', () => {
+            modalGoodbye.classList.add('hidden');
         });
     </script>
 </body>

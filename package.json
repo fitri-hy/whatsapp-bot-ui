@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "start": "node start.js"
+  },
   "dependencies": {
     "@google/generative-ai": "^0.21.0",
     "@octokit/rest": "^18.12.0",

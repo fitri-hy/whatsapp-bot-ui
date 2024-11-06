@@ -31,15 +31,12 @@ async function AdvancedResponse(messageContent, sender, sock, message) {
 		if (messageContent.startsWith(`${config.cmd.CMD_PLAYSTORE} `)) {
 		  const query = messageContent.replace(`${config.cmd.CMD_PLAYSTORE} `, '').trim();
 		  await sock.sendMessage(sender, { react: { text: "⌛", key: message.key } });
-		  
 		  try {
 			const playStoreData = await PlayStore(query);
-
 			if (playStoreData && playStoreData.length > 0) {
 			  const formattedData = playStoreData.map(app => {
 				return `*${app.title}*\nDeveloper: ${app.developer}\nLink: ${app.link}\n\n`;
 			  }).join('');
-			  
 			  await sock.sendMessage(sender, { text: formattedData }, { quoted: message });
 			  await sock.sendMessage(sender, { react: { text: "✅", key: message.key } });
 			} else {
