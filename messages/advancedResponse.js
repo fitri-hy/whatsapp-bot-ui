@@ -27,6 +27,40 @@ const { Ringtone } = require('./utils/Music');
 
 async function AdvancedResponse(messageContent, sender, sock, message) {
 	if ((config.settings.SELF && message.key.fromMe) || !config.settings.SELF) {
+
+		if (messageContent.trim() === `${config.cmdGroup.CMD_TAG_ALL}` && sender.endsWith('@g.us')) {
+			await sock.sendMessage(sender, { react: { text: "⌛", key: message.key } });
+			try {
+				const groupMeta = await sock.groupMetadata(sender);
+				const participants = groupMeta.participants;
+				const mentionText = participants.map(participant => `@${participant.id.split('@')[0]}`).join(' ');
+				await sock.sendMessage(sender, { text: `🔔 *Mention All Participants* 🔔\n\n${mentionText}`, mentions: participants.map(p => p.id) }, { quoted: message });
+				await sock.sendMessage(sender, { react: { text: "✅", key: message.key } });
+			} catch (err) {
+				console.error('Failed to get group info:', err);
+				await sock.sendMessage(sender, { react: { text: "❌", key: message.key } });
+			}
+		}
+
+		if (messageContent.trim() === `${config.cmdGroup.CMD_GROUP_META}` && sender.endsWith('@g.us')) {
+		  await sock.sendMessage(sender, { react: { text: "⌛", key: message.key } });
+		  try {
+			const groupInviteLink = await sock.groupInviteCode(sender);
+			const groupUrl = `https://chat.whatsapp.com/${groupInviteLink}`;
+			const groupMeta = await sock.groupMetadata(sender);
+			const response = `✨ ${groupMeta.subject}\n` +
+							 `👥 ${groupMeta.participants.length}\n` +
+							 `📅 ${new Date(groupMeta.creation * 1000).toLocaleDateString()}\n` +
+							 `🌐 ${groupUrl}\n` +
+							 `📝 ${groupMeta.desc || 'No description available'}`;
+
+			await sock.sendMessage(sender, { text: response }, { quoted: message });
+			await sock.sendMessage(sender, { react: { text: "✅", key: message.key } });
+		  } catch (err) {
+			console.error('Failed to get group info:', err);
+			await sock.sendMessage(sender, { react: { text: "❌", key: message.key } });
+		  }
+		}
 		
 		if (messageContent.startsWith(`${config.cmd.CMD_PLAYSTORE} `)) {
 		  const query = messageContent.replace(`${config.cmd.CMD_PLAYSTORE} `, '').trim();

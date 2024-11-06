@@ -11,7 +11,9 @@
     "CMD_PROMOTE": ".promote",
     "CMD_DEMOTE": ".demote",
     "CMD_ADD": ".add",
-    "CMD_KICK": ".kick"
+    "CMD_KICK": ".kick",
+    "CMD_TAG_ALL": ".tagall",
+    "CMD_GROUP_META": ".groupmeta"
   },
   "cmd": {
     "CMD_PLAYSTORE": ".playstore",

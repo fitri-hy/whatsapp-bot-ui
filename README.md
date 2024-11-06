@@ -41,6 +41,9 @@ WhatsApp Bot UI offers a user-friendly and responsive interface for managing a W
 ├• Add & Kick Member
 ├• Change Title & Desc Group
 ├• Promote & Demote Member
+├• Group Info
+├• Welcome & Goodbye Greetings
+├• Mention All
 └• Lock & Unlock Chat
 
 📦 Miscellaneous
@@ -90,6 +93,8 @@ npm start
 > - [ADD] Apps Search
 > - [ADD] Welcome Greetings (Group)
 > - [ADD] Goodbye Greetings (Group)
+> - [ADD] Group Info (Group)
+> - [ADD] Mention All (Group)
 
 > **Version 1.6**
 > - [ADD] Add Member in Group

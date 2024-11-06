@@ -560,6 +560,8 @@ app.post('/settings-group', (req, res) => {
         CMD_DEMOTE: req.body.CMD_DEMOTE,
         CMD_ADD: req.body.CMD_ADD,
         CMD_KICK: req.body.CMD_KICK,
+        CMD_TAG_ALL: req.body.CMD_TAG_ALL,
+        CMD_GROUP_META: req.body.CMD_GROUP_META,
     };
 
     fs.readFile(configPath, 'utf8', (err, data) => {
