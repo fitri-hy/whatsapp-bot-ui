@@ -52,7 +52,7 @@
     "CMD_TKDLMP4": ".tkdl-mp4",
     "CMD_TKDLMP3": ".tkdl-mp3",
     "CMD_VMDLMP4": ".vmdl-mp4",
-    "CMD_VMDLMP3": ".ytdl-mp3",
+    "CMD_VMDLMP3": ".vmdl-mp3",
     "CMD_FBDLMP4": ".fbdl-mp4",
     "CMD_FBDLMP3": ".fbdl-mp3",
     "CMD_YTDLMP4": ".ytdl-mp4",
