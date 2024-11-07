@@ -23,12 +23,32 @@ const { kataKataRandom, heckerRandom, dilanRandom, bucinRandom, quoteRandom } = 
 const { ProductPrices, FileSearch, PlayStore } = require('./utils/Google');
 const { dnsLookup, sslLookup, httpHeadersLookup, CheckVulnerability } = require('./utils/Tools');
 const { Certificate, Wallpaper } = require('./utils/ImageGenerator');
-const { Ringtone } = require('./utils/Music');
+const { Ringtone, YouTube } = require('./utils/Music');
 const { bitCoin } = require('./utils/Coin');
 
 async function AdvancedResponse(messageContent, sender, sock, message) {
 	if ((config.settings.SELF && message.key.fromMe) || !config.settings.SELF) {
 
+		if (messageContent.startsWith(`${config.cmd.CMD_YOUTUBE} `)) {
+		  const query = messageContent.replace(`${config.cmd.CMD_YOUTUBE} `, '').trim();
+		  await sock.sendMessage(sender, { react: { text: '⌛', key: message.key } });
+		  try {
+			const outputFilePath = path.join(__dirname, '../public/media/youtube.mp4');
+			const YoutubeData = await YouTube(query, outputFilePath);
+			if (YoutubeData) {
+			  await sock.sendMessage(sender, { video: { url: outputFilePath }, caption: `Youtube URL: ${YoutubeData.videoUrl}` }, { quoted: message });
+			  await sock.sendMessage(sender, { react: { text: '✅', key: message.key } });
+			  fs.unlinkSync(outputFilePath);
+			} else {
+			  await sock.sendMessage(sender, { text: 'Video not found.' }, { quoted: message });
+			  await sock.sendMessage(sender, { react: { text: '❌', key: message.key } });
+			}
+		  } catch (error) {
+			console.log('Failed to get video data:', error);
+			await sock.sendMessage(sender, { react: { text: '❌', key: message.key } });
+		  }
+		}
+				
 		if (messageContent === `${config.cmd.CMD_BITCOIN}`) {
 		  await sock.sendMessage(sender, { react: { text: "⌛", key: message.key } });
 		  try {
