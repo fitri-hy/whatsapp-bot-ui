@@ -16,6 +16,7 @@
     "CMD_GROUP_META": ".groupmeta"
   },
   "cmd": {
+    "CMD_BITCOIN": ".bitcoin",
     "CMD_PLAYSTORE": ".playstore",
     "CMD_RINGTONE": ".ringtone",
     "CMD_WALLPAPER": ".wallpaper",

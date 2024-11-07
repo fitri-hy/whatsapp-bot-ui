@@ -452,6 +452,7 @@ app.post('/update-link', (req, res) => {
 
 app.post('/settings', (req, res) => {
     const newCommands = {
+        CMD_BITCOIN: req.body.CMD_BITCOIN,
         CMD_PLAYSTORE: req.body.CMD_PLAYSTORE,
         CMD_RINGTONE: req.body.CMD_RINGTONE,
         CMD_WALLPAPER: req.body.CMD_WALLPAPER,

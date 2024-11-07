@@ -24,10 +24,31 @@ const { ProductPrices, FileSearch, PlayStore } = require('./utils/Google');
 const { dnsLookup, sslLookup, httpHeadersLookup, CheckVulnerability } = require('./utils/Tools');
 const { Certificate, Wallpaper } = require('./utils/ImageGenerator');
 const { Ringtone } = require('./utils/Music');
+const { bitCoin } = require('./utils/Coin');
 
 async function AdvancedResponse(messageContent, sender, sock, message) {
 	if ((config.settings.SELF && message.key.fromMe) || !config.settings.SELF) {
 
+		if (messageContent === `${config.cmd.CMD_BITCOIN}`) {
+		  await sock.sendMessage(sender, { react: { text: "⌛", key: message.key } });
+		  try {
+			const data = await bitCoin();
+			const responseMessage = `*BitCoin Data*\n\n` +
+									`Final Price:\n> ${data.lastPrice}\n` +
+									`Change 24h:\n> ${data.change24h}\n` +
+									`Lowest Price 24h:\n> ${data.low24h}\n` +
+									`Highest price 24h:\n> ${data.high24h}\n` +
+									`Volume 24h (BTC):\n> ${data.volumeBTC}\n` +
+									`Volume 24h (IDR):\n> ${data.volumeIDR}\n` +
+									`Date:\n> ${data.date}`;
+			await sock.sendMessage(sender, { text: responseMessage }, { quoted: message });
+						await sock.sendMessage(sender, { react: { text: "✅", key: message.key } });
+		  } catch (error) {
+			console.error('Error sending message:', error);
+			await sock.sendMessage(sender, { react: { text: "❌", key: message.key } });
+		  }
+		}
+		
 		if (messageContent.trim() === `${config.cmdGroup.CMD_TAG_ALL}` && sender.endsWith('@g.us')) {
 			await sock.sendMessage(sender, { react: { text: "⌛", key: message.key } });
 			try {
@@ -258,7 +279,6 @@ async function AdvancedResponse(messageContent, sender, sock, message) {
 			}
 		}
 
-		
 		if (messageContent === `${config.cmd.CMD_QUOTE}`) {
 			await sock.sendMessage(sender, { react: { text: "⌛", key: message.key } });
 

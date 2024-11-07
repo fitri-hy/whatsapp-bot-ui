@@ -67,6 +67,7 @@ WhatsApp Bot UI offers a user-friendly and responsive interface for managing a W
 ├• Wallpaper
 ├• Ringtone
 ├• Apps Search
+├• BitCoin Data
 └• New Features Comming soon ...
 ```
 
@@ -91,6 +92,7 @@ npm start
 > **Version 1.7**
 > - [ADD] Ringtone
 > - [ADD] Apps Search
+> - [ADD] BitCoin Data
 > - [ADD] Welcome Greetings (Group)
 > - [ADD] Goodbye Greetings (Group)
 > - [ADD] Group Info (Group)
