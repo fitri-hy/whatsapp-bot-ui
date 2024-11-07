@@ -61,4 +61,22 @@ async function Certificate(name) {
     return screenshotPath;
 }
 
-module.exports = { Certificate, Wallpaper };
+async function FreePik(query) {
+    const url = `https://www.freepik.com/search?format=search&last_filter=selection&last_value=1&query=${query}&selection=1`;
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36');
+    await page.goto(url, { waitUntil: 'networkidle2' });
+    try {
+        await page.waitForSelector('a._1286nb1h img._1286nb17');
+        const firstImageUrl = await page.$eval('a._1286nb1h img._1286nb17', img => img.getAttribute('src'));
+        await browser.close();
+        return { firstImageUrl };
+    } catch (error) {
+        console.error("Failed to retrieve image:", error);
+        await browser.close();
+        return null;
+    }
+}
+
+module.exports = { Certificate, Wallpaper, FreePik };

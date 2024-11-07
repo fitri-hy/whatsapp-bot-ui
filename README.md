@@ -65,6 +65,7 @@ WhatsApp Bot UI offers a user-friendly and responsive interface for managing a W
 ├• Domain Check Vulnerability
 ├• Certificate Maker
 ├• Wallpaper
+├• FreePik
 ├• Ringtone
 ├• Youtube Search
 ├• Apps Search
@@ -93,6 +94,7 @@ npm start
 > **Version 1.7**
 > - [ADD] Ringtone
 > - [ADD] Apps Search
+> - [ADD] FreePik
 > - [ADD] BitCoin Data
 > - [ADD] Youtube Search
 > - [ADD] Welcome Greetings (Group)

@@ -22,12 +22,31 @@ const { AesEncryption, AesDecryption, CamelliaEncryption, CamelliaDecryption, Sh
 const { kataKataRandom, heckerRandom, dilanRandom, bucinRandom, quoteRandom } = require('./utils/Entertain.js');
 const { ProductPrices, FileSearch, PlayStore } = require('./utils/Google');
 const { dnsLookup, sslLookup, httpHeadersLookup, CheckVulnerability } = require('./utils/Tools');
-const { Certificate, Wallpaper } = require('./utils/ImageGenerator');
+const { Certificate, Wallpaper, FreePik } = require('./utils/ImageGenerator');
 const { Ringtone, YouTube } = require('./utils/Music');
 const { bitCoin } = require('./utils/Coin');
 
 async function AdvancedResponse(messageContent, sender, sock, message) {
 	if ((config.settings.SELF && message.key.fromMe) || !config.settings.SELF) {
+		
+		if (messageContent.startsWith(`${config.cmd.CMD_FREEPIK} `)) {
+			const query = messageContent.replace(`${config.cmd.CMD_FREEPIK} `, '').trim();
+			await sock.sendMessage(sender, { react: { text: "⌛", key: message.key } });
+			try {
+				const FreePikData = await FreePik(query);
+				if (FreePikData && FreePikData.firstImageUrl) {
+					const caption = `Results from ${query}`;
+					await sock.sendMessage(sender, { image: { url: FreePikData.firstImageUrl }, caption }, { quoted: message });
+					await sock.sendMessage(sender, { react: { text: "✅", key: message.key } });
+				} else {
+					await sock.sendMessage(sender, { text: "No FreePik Data found for your search query."}, { quoted: message });
+					await sock.sendMessage(sender, { react: { text: "❌", key: message.key } });
+				}
+			} catch (error) {
+				console.error(`Failed to get data:`, error);
+				await sock.sendMessage(sender, { react: { text: "❌", key: message.key } });
+			}
+		}
 
 		if (messageContent.startsWith(`${config.cmd.CMD_YOUTUBE} `)) {
 		  const query = messageContent.replace(`${config.cmd.CMD_YOUTUBE} `, '').trim();
