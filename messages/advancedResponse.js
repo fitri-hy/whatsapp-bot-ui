@@ -873,6 +873,53 @@ async function AdvancedResponse(messageContent, sender, sock, message) {
 			{ cmd: `${config.cmd.CMD_YTDLMP3} `, platform: 'youtube', mediaType: 'mp3' },
 		];
 
+		const deleteFile = (filePath) => {
+			fs.unlink(filePath, (err) => {
+				if (err) {
+					console.error(`Error deleting file: ${err.message}`);
+				}
+			});
+		};
+
+		// Define handleMediaDownload function above its usage
+		const handleMediaDownload = async (platform, mediaType, url, sender, message, sock) => {
+			const fileExtensions = {
+				mp4: `${platform}-video.mp4`,
+				mp3: `${platform}-audio.mp3`,
+			};
+			const outputFilePath = path.join(__dirname, "../public/media", fileExtensions[mediaType]);
+
+			await sock.sendMessage(sender, { react: { text: "⌛", key: message.key } });
+
+			try {
+				if (mediaType === 'mp4') {
+					await (platform === 'twitter' ? TwitterVideo(url, outputFilePath) :
+						platform === 'instagram' ? InstagramVideo(url, outputFilePath) :
+						platform === 'tiktok' ? TikTokVideo(url, outputFilePath) :
+						platform === 'vimeo' ? VimeoVideo(url, outputFilePath) :
+						platform === 'facebook' ? FacebookVideo(url, outputFilePath) :
+						YoutubeVideo(url, outputFilePath));
+				} else {
+					await (platform === 'twitter' ? TwitterAudio(url, outputFilePath) :
+						platform === 'instagram' ? InstagramAudio(url, outputFilePath) :
+						platform === 'tiktok' ? TikTokAudio(url, outputFilePath) :
+						platform === 'vimeo' ? VimeoAudio(url, outputFilePath) :
+						FacebookAudio(url, outputFilePath));
+				}
+
+				const mediaMessage = mediaType === 'mp4' 
+					? { video: { url: outputFilePath }, caption: "This is the video you asked for!" } 
+					: { audio: { url: outputFilePath }, mimetype: 'audio/mp4' };
+
+				await sock.sendMessage(sender, mediaMessage, { quoted: message });
+				await sock.sendMessage(sender, { react: { text: "✅", key: message.key } });
+
+				deleteFile(outputFilePath);
+			} catch (error) {
+				await sock.sendMessage(sender, { react: { text: "❌", key: message.key } });
+			}
+		};
+
 		for (const { cmd, platform, mediaType } of mediaCommands) {
 			if (messageContent.startsWith(cmd)) {
 				const url = messageContent.split(' ')[1];
@@ -1019,51 +1066,6 @@ async function AdvancedResponse(messageContent, sender, sock, message) {
 		
 	}
 
-	const deleteFile = (filePath) => {
-		fs.unlink(filePath, (err) => {
-			if (err) {
-				console.error(`Error deleting file: ${err.message}`);
-			}
-		});
-	};
-
-	const handleMediaDownload = async (platform, mediaType, url, sender, message, sock) => {
-		const fileExtensions = {
-			mp4: `${platform}-video.mp4`,
-			mp3: `${platform}-audio.mp3`,
-		};
-		const outputFilePath = path.join(__dirname, "../public/media", fileExtensions[mediaType]);
-
-		await sock.sendMessage(sender, { react: { text: "⌛", key: message.key } });
-
-		try {
-			if (mediaType === 'mp4') {
-				await (platform === 'twitter' ? TwitterVideo(url, outputFilePath) :
-					platform === 'instagram' ? InstagramVideo(url, outputFilePath) :
-					platform === 'tiktok' ? TikTokVideo(url, outputFilePath) :
-					platform === 'vimeo' ? VimeoVideo(url, outputFilePath) :
-					platform === 'facebook' ? FacebookVideo(url, outputFilePath) :
-					YoutubeVideo(url, outputFilePath));
-			} else {
-				await (platform === 'twitter' ? TwitterAudio(url, outputFilePath) :
-					platform === 'instagram' ? InstagramAudio(url, outputFilePath) :
-					platform === 'tiktok' ? TikTokAudio(url, outputFilePath) :
-					platform === 'vimeo' ? VimeoAudio(url, outputFilePath) :
-					FacebookAudio(url, outputFilePath));
-			}
-
-			const mediaMessage = mediaType === 'mp4' 
-				? { video: { url: outputFilePath }, caption: "This is the video you asked for!" } 
-				: { audio: { url: outputFilePath }, mimetype: 'audio/mp4' };
-
-			await sock.sendMessage(sender, mediaMessage, { quoted: message });
-			await sock.sendMessage(sender, { react: { text: "✅", key: message.key } });
-
-			deleteFile(outputFilePath);
-		} catch (error) {
-			await sock.sendMessage(sender, { react: { text: "❌", key: message.key } });
-		}
-	}
 };
 
 module.exports = AdvancedResponse;
