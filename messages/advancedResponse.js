@@ -338,7 +338,7 @@ async function AdvancedResponse(messageContent, sender, sock, message) {
 			try {
 				const results = await ProductPrices(query);
 				if (results.length === 0) {
-					await sock.sendMessage(sender, { text: 'No results found for: ' + query, quoted: message });
+					await sock.sendMessage(sender, { text: 'No results found for: ' + query}, { quoted: message });
 					await sock.sendMessage(sender, { react: { text: "❌", key: message.key } });
 					return;
 				}
