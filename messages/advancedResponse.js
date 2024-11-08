@@ -182,6 +182,43 @@ async function AdvancedResponse(messageContent, sender, sock, message) {
 			}
 		}
 		
+		if (messageContent.startsWith(`${config.cmd.CMD_GITHUB_REPO} `)) {
+			const query = messageContent.replace(`${config.cmd.CMD_GITHUB_REPO} `, '').trim();
+			await sock.sendMessage(sender, { react: { text: "⌛", key: message.key } });
+			try {
+				const response = await axios.get(`https://api.github.com/search/repositories?q=${query}&sort=stars&order=desc&per_page=30`);
+				const data = response.data.items;
+				if (data.length === 0) {
+					await sock.sendMessage(sender, { text: 'No repositories found matching your query.' }, { quoted: message });
+				} else {
+					const shuffledData = data.sort(() => 0.5 - Math.random()).slice(0, 10);
+					let caption = `🔍 Top 10 random repositories for: *${query}*\n\n`;
+					shuffledData.forEach((repo, index) => {
+						const updatedDate = new Date(repo.updated_at);
+						const day = String(updatedDate.getDate()).padStart(2, '0');
+						const month = String(updatedDate.getMonth() + 1).padStart(2, '0');
+						const year = updatedDate.getFullYear();
+						const hours = String(updatedDate.getHours()).padStart(2, '0');
+						const minutes = String(updatedDate.getMinutes()).padStart(2, '0');
+						const formattedDate = `${day}/${month}/${year} ${hours}:${minutes}`;
+
+						caption += `${index + 1}. *${repo.name}*\n` +
+							`⭐ Stars: ${repo.stargazers_count}\n` +
+							`🍴 Forks: ${repo.forks_count}\n` +
+							`👀 Watchers: ${repo.watchers_count}\n` +
+							`🛠️ Open Issues: ${repo.open_issues_count}\n` +
+							`⏰ Last Updated: ${formattedDate}\n` +
+							`🔗 Git URL: ${repo.clone_url}\n\n`;
+					});
+					await sock.sendMessage(sender, { text: caption }, { quoted: message });
+				}
+				await sock.sendMessage(sender, { react: { text: "✅", key: message.key } });
+			} catch (error) {
+				console.log('Failed to get data', error);
+				await sock.sendMessage(sender, { react: { text: "❌", key: message.key } });
+			}
+		}
+	
 		if (messageContent === '.source') {
 			await sock.sendMessage(sender, { react: { text: "⌛", key: message.key } });
 			try {

@@ -708,6 +708,13 @@
 							username</span>
 						</div>
 						<div class="flex flex-col gap-1">
+							<label class="text-xs md:text-sm">Github Search Repository</label>
+							<input name="CMD_GITHUB_REPO" class="p-2 rounded bg-gray-800 w-full focus:outline-none border border-gray-700" value="<%= config.cmd.CMD_GITHUB_REPO %>" onkeydown="return event.key !== ' '" />
+							<span class="text-xs text-gray-300">e.g: 
+							<code class="bg-gray-700">.repo</code> 
+							query</span>
+						</div>
+						<div class="flex flex-col gap-1">
 							<label class="text-xs md:text-sm">OCR (Image To Text)</label>
 							<input name="CMD_OCR" class="p-2 rounded bg-gray-800 w-full focus:outline-none border border-gray-700" value="<%= config.cmd.CMD_OCR %>" onkeydown="return event.key !== ' '" />
 							<span class="text-xs text-gray-300">e.g: (quote) 

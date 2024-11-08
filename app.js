@@ -474,6 +474,7 @@ app.post('/settings', (req, res) => {
         CMD_SSMOBILE: req.body.CMD_SSMOBILE,
         CMD_SEO: req.body.CMD_SEO,
         CMD_GITHUB: req.body.CMD_GITHUB,
+        CMD_GITHUB_REPO: req.body.CMD_GITHUB_REPO,
         CMD_OCR: req.body.CMD_OCR,
         CMD_COUNT_WORDS: req.body.CMD_COUNT_WORDS,
         CMD_QRCODE: req.body.CMD_QRCODE,

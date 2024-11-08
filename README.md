@@ -70,6 +70,7 @@ WhatsApp Bot UI offers a user-friendly and responsive interface for managing a W
 ├• Youtube Search
 ├• Apps Search
 ├• BitCoin Data
+├• Github Repository Search
 └• New Features Comming soon ...
 ```
 
@@ -97,6 +98,7 @@ npm start
 > - [ADD] FreePik
 > - [ADD] BitCoin Data
 > - [ADD] Youtube Search
+> - [ADD] Github Repository Search
 > - [ADD] Welcome Greetings (Group)
 > - [ADD] Goodbye Greetings (Group)
 > - [ADD] Group Info (Group)

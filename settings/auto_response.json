@@ -56,7 +56,7 @@
     }
   },
   "imagesReact": {
-    "!menu": {
+    "!image-react": {
       "url": "./public/media/default.jpg",
       "caption": "I sent images",
       "preReact": "⏳",

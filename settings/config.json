@@ -37,6 +37,7 @@
     "CMD_SSMOBILE": ".ssmobile",
     "CMD_SEO": ".seo",
     "CMD_GITHUB": ".github",
+    "CMD_GITHUB_REPO": ".repo",
     "CMD_OCR": ".ocr",
     "CMD_COUNT_WORDS": ".count-words",
     "CMD_QRCODE": ".qrcode",
